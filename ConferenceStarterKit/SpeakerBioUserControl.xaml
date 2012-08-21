@@ -1,0 +1,52 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:ETE_Converters="clr-namespace:ConferenceStarterKit.Converters"
+	mc:Ignorable="d"
+	x:Class="ConferenceStarterKit.SpeakerBioUserControl"
+	d:DesignWidth="456" d:DesignHeight="634">
+
+	<UserControl.Resources>
+		<ETE_Converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="0.359*"/>
+				<RowDefinition Height="0.641*"/>
+			</Grid.RowDefinitions>
+			<Image Margin="4,6,0,6" Height="200" Width="160" Source="{Binding PictureUrl}" HorizontalAlignment="Left" d:LayoutOverrides="Width"/>
+			<StackPanel Margin="168,6,0,6" Height="200">
+				<TextBlock Grid.Column="1" Margin="12,0,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" FontFamily="Segoe WP Black" FontSize="24">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                    </TextBlock.Foreground>
+                </TextBlock>
+                <TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Top"/>
+				<TextBlock Grid.Column="1" Margin="12,0,0,0" TextWrapping="Wrap" Text="position" VerticalAlignment="Top" Visibility="{Binding Position, Converter={StaticResource StringVisibilityConverter}}" FontFamily="Segoe WP Black" FontSize="24">
+					<TextBlock.Foreground>
+						<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+					</TextBlock.Foreground>
+				</TextBlock>
+				<TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding Position}" VerticalAlignment="Top"/>
+				<TextBlock Grid.Column="1" Margin="12,0,0,0" TextWrapping="Wrap" Text="twitter" VerticalAlignment="Top" FontFamily="Segoe WP Black" FontSize="24">
+					<TextBlock.Foreground>
+						<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+					</TextBlock.Foreground>
+				</TextBlock>
+				<TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding Twitter}" VerticalAlignment="Top"/>
+			</StackPanel>
+			
+		
+			<TextBlock Grid.Column="0" Grid.Row="1"   TextWrapping="Wrap" Text="{Binding Bio}" VerticalAlignment="Top"/>
+	    	
+					
+		</Grid>
+	</Grid>
+</UserControl>
