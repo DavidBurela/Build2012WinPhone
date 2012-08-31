@@ -8,6 +8,7 @@
 ﻿//    -------------------------------------------------------------------------------------------- 
 
 using System;
+using System.IO.IsolatedStorage;
 using System.Net;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
@@ -38,50 +39,102 @@ namespace ConferenceStarterKit.Services
         {
             SessionList = new ObservableCollection<SessionItemModel>();
             SpeakerList = new ObservableCollection<SpeakerItemModel>();
+            DateTime sessionLastDownload = DateTime.MinValue;
 
-            var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(@"http://odata.msteched.com/teau12/sessions.svc/"));
-            var sessionsQuery = from s in techEdService.Sessions
-                                select s;
+            // Session data
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
+            {
+                sessionLastDownload = (DateTime)IsolatedStorageSettings.ApplicationSettings["SessionLastDownload"];
+            }
+            if(sessionLastDownload.AddHours(1) < DateTime.Now)  // Redownload the data each hour
+            {
+                // Download the data
+                var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(Settings.SessionServiceUri));
+                var sessionsQuery = from s in techEdService.Sessions.Take(20)
+                                    select new SessionTemp
+                                    {
+                                        SessionId = s.SessionID,
+                                        Code = s.Code,
+                                        Title = s.Title,
+                                        Description = s.Abstract,
+                                        Room = s.Room,
+                                        StartTime = s.StartTime,
+                                        Speakers = s.Speakers.Select(p => new SpeakerTemp { SpeakerId = p.SpeakerID, First = p.SpeakerFirstName, Last = p.SpeakerLastName, Twitter = p.Twitter, SmallImage = p.SmallImage })
+                                    };
 
-            ((DataServiceQuery<TechEdServiceReference.Session>)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);        
+                ((DataServiceQuery)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);
+            }
+            else
+            {
+                // Get the data from Isolated storage
+            }
+
+            // Speaker data
+
         }
 
+        class SessionTemp
+        {
+            public int SessionId { get; set; }
+            public string Code { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public string Room { get; set; }
+            public DateTime? StartTime { get; set; }
+            public IEnumerable<SpeakerTemp> Speakers { get; set; }
+        }
+        class SpeakerTemp
+        {
+            public int SpeakerId { get; set; }
+            public string First { get; set; }
+            public string Last { get; set; }
+            public string Twitter { get; set; }
+            public string SmallImage { get; set; }
+        }
         private void OnCustomerOrdersQueryComplete(IAsyncResult result)
         {
             try
             {
-                var svcContext = result.AsyncState as DataServiceQuery<TechEdServiceReference.Session>;
-                var response = svcContext.EndExecute(result);
+                var svcContext = result.AsyncState as DataServiceQuery;
+                if (svcContext != null)
+                {
+                    var sessionData = svcContext.EndExecute(result);
 
-                var converted = from s in response
-                                select new SessionItemModel
-                                {
-                                    Title = s.Title,
-                                    //Date = DateTime.Parse((from t in timeslots
-                                    //                       where t.Id == s.TimeSlotId
-                                    //                       select t.StartTime).First()),
-                                    Description = StripHtmlTags(s.Abstract),
-                                    //Location = s.SessionLocationName,
-                                    Id = s.SessionID,
-                                    Date = (DateTime)s.StartTime,
-                                    //Speakers = (from spk in SpeakerList
-                                    //            where s.SpeakerIds.Contains(spk.Id)
-                                    //            select spk).ToObservableCollection()
-                                };
+                    var converted = from s in ((IEnumerable<SessionTemp>)sessionData)
+                                    select new SessionItemModel
+                                               {
+                                                   Title = s.Title,
+                                                   Description = StripHtmlTags(s.Description),
+                                                   Location = s.Room,
+                                                   Id = s.SessionId,
+                                                   Date = (DateTime)s.StartTime,
+                                                   Speakers = s.Speakers.Select(p => new SpeakerItemModel{Id = p.SpeakerId, FirstName = p.First, LastName = p.Last}).ToObservableCollection()
+                                                   //Speakers = (from spk in SpeakerList
+                                                   //            where s.SpeakerIds.Contains(spk.Id)
+                                                   //            select spk).ToObservableCollection()
+                                               };
 
-
+                    // Update the SessionList collection. Then mark everything as loaded
+                    System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                                                                 {
+                                                                                     SessionList = converted.ToObservableCollection(SessionList);
+                                                                                     SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().ToObservableCollection(SpeakerList);
+                                                                                     var loadedEventArgs = new LoadEventArgs {IsLoaded = true, Message = string.Empty};
+                                                                                     OnDataLoaded(loadedEventArgs);
+                                                                                 });
+                }
+            }
+            catch (DataServiceQueryException)
+            {
                 System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                                                             {
-                                                                                 SessionList = converted.ToObservableCollection(SessionList);
-                                                                                 LoadEventArgs loadedEventArgs = new LoadEventArgs();
-                                                                                 loadedEventArgs.IsLoaded = true;
-                                                                                 loadedEventArgs.Message = string.Empty;
-                                                                                 OnDataLoaded(loadedEventArgs);
-                                                                             });
+                {
+                    var loadedEventArgs = new LoadEventArgs {IsLoaded = false, Message = "There was a network error. Close the app and try again."};
+                    OnDataLoaded(loadedEventArgs);
+                    System.Windows.MessageBox.Show("There was a network error. Close the app and try again.");
+                });
             }
             catch (Exception ex)
             {
-
                 throw;
             }
         }
