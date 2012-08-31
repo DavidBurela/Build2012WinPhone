@@ -16,13 +16,14 @@ using System.Linq;
 using System.Collections;
 using ConferenceStarterKit.ViewModels;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 
 
 namespace ConferenceStarterKit.Services
 {
-    public class ConferenceService : ModelBase, IConferenceService  
+    public class ConferenceService : ModelBase, IConferenceService
     {
-        public ObservableCollection<SessionItemModel> SessionList{ get; set;}
+        public ObservableCollection<SessionItemModel> SessionList { get; set; }
         public ObservableCollection<SpeakerItemModel> SpeakerList { get; set; }
         private ObservableCollection<TwitterStatusItemModel> TwitterFeed;
 
@@ -30,17 +31,61 @@ namespace ConferenceStarterKit.Services
 
         public ObservableCollection<SessionItemModel> GetSessions()
         {
-            return SessionList;   
+            return SessionList;
         }
 
         public void GetData()
         {
             SessionList = new ObservableCollection<SessionItemModel>();
             SpeakerList = new ObservableCollection<SpeakerItemModel>();
-            WebClient wc = new WebClient();
-            wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(SessionCompleted);
-            wc.DownloadStringAsync(new Uri(Settings.SessionServiceUri));          
+
+            var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(@"http://odata.msteched.com/teau12/sessions.svc/"));
+            var sessionsQuery = from s in techEdService.Sessions
+                                select s;
+
+            ((DataServiceQuery<TechEdServiceReference.Session>)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);        
         }
+
+        private void OnCustomerOrdersQueryComplete(IAsyncResult result)
+        {
+            try
+            {
+                var svcContext = result.AsyncState as DataServiceQuery<TechEdServiceReference.Session>;
+                var response = svcContext.EndExecute(result);
+
+                var converted = from s in response
+                                select new SessionItemModel
+                                {
+                                    Title = s.Title,
+                                    //Date = DateTime.Parse((from t in timeslots
+                                    //                       where t.Id == s.TimeSlotId
+                                    //                       select t.StartTime).First()),
+                                    Description = StripHtmlTags(s.Abstract),
+                                    //Location = s.SessionLocationName,
+                                    Id = s.SessionID,
+                                    Date = (DateTime)s.StartTime,
+                                    //Speakers = (from spk in SpeakerList
+                                    //            where s.SpeakerIds.Contains(spk.Id)
+                                    //            select spk).ToObservableCollection()
+                                };
+
+
+                System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                                                             {
+                                                                                 SessionList = converted.ToObservableCollection(SessionList);
+                                                                                 LoadEventArgs loadedEventArgs = new LoadEventArgs();
+                                                                                 loadedEventArgs.IsLoaded = true;
+                                                                                 loadedEventArgs.Message = string.Empty;
+                                                                                 OnDataLoaded(loadedEventArgs);
+                                                                             });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
 
         ConferenceResponse response;
         void SessionCompleted(object sender, DownloadStringCompletedEventArgs e)
@@ -95,7 +140,7 @@ namespace ConferenceStarterKit.Services
             {
                 OnDataLoaded(loadedEventArgs);
             }
-            
+
 
         }
 
@@ -108,21 +153,21 @@ namespace ConferenceStarterKit.Services
         }
 
         public ObservableCollection<SpeakerItemModel> GetSpeakers()
-        {   
-            return SpeakerList;   
-        }        
+        {
+            return SpeakerList;
+        }
 
         public ObservableCollection<TwitterStatusItemModel> GetTwitterFeed(string TwitterId)
-        {  
+        {
             TwitterFeed = new ObservableCollection<TwitterStatusItemModel>();
             WebClient wc = new WebClient();
             wc.DownloadStringCompleted += new DownloadStringCompletedEventHandler(TwitterStatusInformationCompleted);
-            wc.DownloadStringAsync(new Uri(string.Format("{0}{1}", Settings.TwitterServiceUri,TwitterId)));
-            return TwitterFeed;   
+            wc.DownloadStringAsync(new Uri(string.Format("{0}{1}", Settings.TwitterServiceUri, TwitterId)));
+            return TwitterFeed;
         }
 
         void TwitterStatusInformationCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {          
+        {
             try
             {
                 var doc = XDocument.Parse(e.Result);
@@ -139,9 +184,9 @@ namespace ConferenceStarterKit.Services
             }
             catch (Exception)
             {
-                
+
             }
-            
+
 
             TwitterFeed = null;
         }

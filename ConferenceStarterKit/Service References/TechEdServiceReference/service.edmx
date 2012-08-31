@@ -1,0 +1,149 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
+    <Schema Namespace="ODataTEModel" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="AudienceCategory">
+        <Key>
+          <PropertyRef Name="AudienceCategoryID" />
+        </Key>
+        <Property Name="AudienceCategoryID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Sessions" Relationship="ODataTEModel.SessionAudienceCategory" FromRole="AudienceCategory" ToRole="Session" />
+      </EntityType>
+      <EntityType Name="Level">
+        <Key>
+          <PropertyRef Name="LevelID" />
+        </Key>
+        <Property Name="LevelID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Sessions" Relationship="ODataTEModel.FK_Session_Level" FromRole="Level" ToRole="Session" />
+      </EntityType>
+      <EntityType Name="Session">
+        <Key>
+          <PropertyRef Name="SessionID" />
+        </Key>
+        <Property Name="SessionID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" />
+        <Property Name="Code" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="Title" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_EmpKeepInContent="true" />
+        <Property Name="Abstract" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationSummary" m:FC_ContentKind="text" m:FC_EmpKeepInContent="true" />
+        <Property Name="Room" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="Date" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="StartTime" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="EndTime" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ModifiedDate" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_EmpKeepInContent="true" />
+        <NavigationProperty Name="Level" Relationship="ODataTEModel.FK_Session_Level" FromRole="Session" ToRole="Level" />
+        <NavigationProperty Name="SessionType" Relationship="ODataTEModel.FK_Session_SessionType" FromRole="Session" ToRole="SessionType" />
+        <NavigationProperty Name="Track" Relationship="ODataTEModel.FK_Session_Track" FromRole="Session" ToRole="Track" />
+        <NavigationProperty Name="AudienceCategories" Relationship="ODataTEModel.SessionAudienceCategory" FromRole="Session" ToRole="AudienceCategory" />
+        <NavigationProperty Name="Speakers" Relationship="ODataTEModel.SessionSpeaker" FromRole="Session" ToRole="Speaker" />
+        <NavigationProperty Name="Tags" Relationship="ODataTEModel.SessionTag" FromRole="Session" ToRole="Tag" />
+      </EntityType>
+      <EntityType Name="SessionType">
+        <Key>
+          <PropertyRef Name="SessionTypeID" />
+        </Key>
+        <Property Name="SessionTypeID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Sessions" Relationship="ODataTEModel.FK_Session_SessionType" FromRole="SessionType" ToRole="Session" />
+      </EntityType>
+      <EntityType Name="Speaker">
+        <Key>
+          <PropertyRef Name="SpeakerID" />
+        </Key>
+        <Property Name="SpeakerID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SpeakerFirstName" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="SpeakerLastName" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="LargeImage" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="SmallImage" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="Twitter" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Sessions" Relationship="ODataTEModel.SessionSpeaker" FromRole="Speaker" ToRole="Session" />
+      </EntityType>
+      <EntityType Name="Tag">
+        <Key>
+          <PropertyRef Name="TagID" />
+        </Key>
+        <Property Name="TagID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TagName" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Tag1" Relationship="ODataTEModel.FK_Tag_Tag1" FromRole="Tag" ToRole="Tag1" />
+        <NavigationProperty Name="Tag2" Relationship="ODataTEModel.FK_Tag_Tag1" FromRole="Tag1" ToRole="Tag" />
+        <NavigationProperty Name="Sessions" Relationship="ODataTEModel.SessionTag" FromRole="Tag" ToRole="Session" />
+      </EntityType>
+      <EntityType Name="Track">
+        <Key>
+          <PropertyRef Name="TrackID" />
+        </Key>
+        <Property Name="TrackID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Sessions" Relationship="ODataTEModel.FK_Session_Track" FromRole="Track" ToRole="Session" />
+      </EntityType>
+      <Association Name="FK_Session_Level">
+        <End Role="Level" Type="ODataTEModel.Level" Multiplicity="0..1" />
+        <End Role="Session" Type="ODataTEModel.Session" Multiplicity="*" />
+      </Association>
+      <Association Name="FK_Session_SessionType">
+        <End Role="SessionType" Type="ODataTEModel.SessionType" Multiplicity="0..1" />
+        <End Role="Session" Type="ODataTEModel.Session" Multiplicity="*" />
+      </Association>
+      <Association Name="FK_Session_Track">
+        <End Role="Track" Type="ODataTEModel.Track" Multiplicity="0..1" />
+        <End Role="Session" Type="ODataTEModel.Session" Multiplicity="*" />
+      </Association>
+      <Association Name="FK_Tag_Tag1">
+        <End Role="Tag" Type="ODataTEModel.Tag" Multiplicity="0..1" />
+        <End Role="Tag1" Type="ODataTEModel.Tag" Multiplicity="*" />
+      </Association>
+      <Association Name="SessionAudienceCategory">
+        <End Role="AudienceCategory" Type="ODataTEModel.AudienceCategory" Multiplicity="*" />
+        <End Role="Session" Type="ODataTEModel.Session" Multiplicity="*" />
+      </Association>
+      <Association Name="SessionSpeaker">
+        <End Role="Session" Type="ODataTEModel.Session" Multiplicity="*" />
+        <End Role="Speaker" Type="ODataTEModel.Speaker" Multiplicity="*" />
+      </Association>
+      <Association Name="SessionTag">
+        <End Role="Session" Type="ODataTEModel.Session" Multiplicity="*" />
+        <End Role="Tag" Type="ODataTEModel.Tag" Multiplicity="*" />
+      </Association>
+    </Schema>
+    <Schema Namespace="TESessionsODataApp" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="ODataTEEntities" m:IsDefaultEntityContainer="true">
+        <FunctionImport Name="GetRecentSessions" EntitySet="Sessions" ReturnType="Collection(ODataTEModel.Session)" m:HttpMethod="GET" />
+        <EntitySet Name="AudienceCategories" EntityType="ODataTEModel.AudienceCategory" />
+        <EntitySet Name="Levels" EntityType="ODataTEModel.Level" />
+        <EntitySet Name="Sessions" EntityType="ODataTEModel.Session" />
+        <EntitySet Name="SessionTypes" EntityType="ODataTEModel.SessionType" />
+        <EntitySet Name="Speakers" EntityType="ODataTEModel.Speaker" />
+        <EntitySet Name="Tags" EntityType="ODataTEModel.Tag" />
+        <EntitySet Name="Tracks" EntityType="ODataTEModel.Track" />
+        <AssociationSet Name="FK_Session_Level" Association="ODataTEModel.FK_Session_Level">
+          <End Role="Level" EntitySet="Levels" />
+          <End Role="Session" EntitySet="Sessions" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Session_SessionType" Association="ODataTEModel.FK_Session_SessionType">
+          <End Role="SessionType" EntitySet="SessionTypes" />
+          <End Role="Session" EntitySet="Sessions" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Session_Track" Association="ODataTEModel.FK_Session_Track">
+          <End Role="Track" EntitySet="Tracks" />
+          <End Role="Session" EntitySet="Sessions" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Tag_Tag1" Association="ODataTEModel.FK_Tag_Tag1">
+          <End Role="Tag" EntitySet="Tags" />
+          <End Role="Tag1" EntitySet="Tags" />
+        </AssociationSet>
+        <AssociationSet Name="SessionAudienceCategory" Association="ODataTEModel.SessionAudienceCategory">
+          <End Role="AudienceCategory" EntitySet="AudienceCategories" />
+          <End Role="Session" EntitySet="Sessions" />
+        </AssociationSet>
+        <AssociationSet Name="SessionSpeaker" Association="ODataTEModel.SessionSpeaker">
+          <End Role="Session" EntitySet="Sessions" />
+          <End Role="Speaker" EntitySet="Speakers" />
+        </AssociationSet>
+        <AssociationSet Name="SessionTag" Association="ODataTEModel.SessionTag">
+          <End Role="Session" EntitySet="Sessions" />
+          <End Role="Tag" EntitySet="Tags" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
