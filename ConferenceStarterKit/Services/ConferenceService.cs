@@ -42,35 +42,48 @@ namespace ConferenceStarterKit.Services
             DateTime sessionLastDownload = DateTime.MinValue;
 
             // Session data
+            // Get the last time the data was downloaded.
             if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
             {
                 sessionLastDownload = (DateTime)IsolatedStorageSettings.ApplicationSettings["SessionLastDownload"];
             }
-            if(sessionLastDownload.AddHours(1) < DateTime.Now)  // Redownload the data each hour
-            {
-                // Download the data
-                var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(Settings.SessionServiceUri));
-                var sessionsQuery = from s in techEdService.Sessions.Take(20)
-                                    select new SessionTemp
-                                    {
-                                        SessionId = s.SessionID,
-                                        Code = s.Code,
-                                        Title = s.Title,
-                                        Description = s.Abstract,
-                                        Room = s.Room,
-                                        StartTime = s.StartTime,
-                                        Speakers = s.Speakers.Select(p => new SpeakerTemp { SpeakerId = p.SpeakerID, First = p.SpeakerFirstName, Last = p.SpeakerLastName, Twitter = p.Twitter, SmallImage = p.SmallImage })
-                                    };
 
-                ((DataServiceQuery)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);
+            // Check if we need to download the latest data, or if we can just use the isolated storage data
+            // Cache the data for 2 hours
+            if ((sessionLastDownload.AddHours(2) >= DateTime.Now) && IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
+            {
+                // Get the data from Isolated storage
+                if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
+                {
+                    var converted = (IsolatedStorageSettings.ApplicationSettings["SessionData"] as IEnumerable<SessionItemModel>);
+
+                    System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        SessionList = converted.ToObservableCollection(SessionList);
+                        SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().ToObservableCollection(SpeakerList);
+                        var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
+                        OnDataLoaded(loadedEventArgs);
+                    });
+                }
             }
             else
             {
-                // Get the data from Isolated storage
+                // Download the data
+                var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(Settings.SessionServiceUri));
+                var sessionsQuery = from s in techEdService.Sessions//.Take(20)
+                                    select new SessionTemp
+                                               {
+                                                   SessionId = s.SessionID,
+                                                   Code = s.Code,
+                                                   Title = s.Title,
+                                                   Description = s.Abstract,
+                                                   Room = s.Room,
+                                                   StartTime = s.StartTime,
+                                                   Speakers = s.Speakers.Select(p => new SpeakerTemp { SpeakerId = p.SpeakerID, First = p.SpeakerFirstName, Last = p.SpeakerLastName, Twitter = p.Twitter, SmallImage = p.SmallImage })
+                                               };
+
+                ((DataServiceQuery)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);
             }
-
-            // Speaker data
-
         }
 
         class SessionTemp
@@ -100,7 +113,7 @@ namespace ConferenceStarterKit.Services
                 {
                     var sessionData = svcContext.EndExecute(result);
 
-                    var converted = from s in ((IEnumerable<SessionTemp>)sessionData)
+                    var converted = (from s in ((IEnumerable<SessionTemp>)sessionData)
                                     select new SessionItemModel
                                                {
                                                    Title = s.Title,
@@ -108,27 +121,42 @@ namespace ConferenceStarterKit.Services
                                                    Location = s.Room,
                                                    Id = s.SessionId,
                                                    Date = (DateTime)s.StartTime,
-                                                   Speakers = s.Speakers.Select(p => new SpeakerItemModel{Id = p.SpeakerId, FirstName = p.First, LastName = p.Last}).ToObservableCollection()
-                                                   //Speakers = (from spk in SpeakerList
-                                                   //            where s.SpeakerIds.Contains(spk.Id)
-                                                   //            select spk).ToObservableCollection()
-                                               };
+                                                   Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last }).ToObservableCollection()
+                                               }).ToList();
 
                     // Update the SessionList collection. Then mark everything as loaded
                     System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                                                                 {
-                                                                                     SessionList = converted.ToObservableCollection(SessionList);
-                                                                                     SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().ToObservableCollection(SpeakerList);
-                                                                                     var loadedEventArgs = new LoadEventArgs {IsLoaded = true, Message = string.Empty};
-                                                                                     OnDataLoaded(loadedEventArgs);
-                                                                                 });
+                    {
+                        SessionList = converted.ToObservableCollection(SessionList);
+                        SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().ToObservableCollection(SpeakerList);
+                        var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
+                        OnDataLoaded(loadedEventArgs);
+                    });
+
+
+                    // save the results into the cache
+                    // Serialize our collection.
+                    
+
+
+                    // save the data
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
+                        IsolatedStorageSettings.ApplicationSettings.Remove("SessionData");
+                    IsolatedStorageSettings.ApplicationSettings.Add("SessionData", converted);
+
+                    // then update the last updated key
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
+                        IsolatedStorageSettings.ApplicationSettings.Remove("SessionLastDownload");
+                    IsolatedStorageSettings.ApplicationSettings.Add("SessionLastDownload", DateTime.Now);
+                    IsolatedStorageSettings.ApplicationSettings.Save();
+
                 }
             }
             catch (DataServiceQueryException)
             {
                 System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    var loadedEventArgs = new LoadEventArgs {IsLoaded = false, Message = "There was a network error. Close the app and try again."};
+                    var loadedEventArgs = new LoadEventArgs { IsLoaded = false, Message = "There was a network error. Close the app and try again." };
                     OnDataLoaded(loadedEventArgs);
                     System.Windows.MessageBox.Show("There was a network error. Close the app and try again.");
                 });
