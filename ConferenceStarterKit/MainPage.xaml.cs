@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Microsoft.Phone.Controls;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
@@ -85,6 +86,11 @@ namespace ConferenceStarterKit
             App.CurrentSession = e.Item.Data as SessionItemModel;
             if (App.CurrentSession != null)
                 NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
+        }
+
+        private void ApplicationBarAbout_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/YourLastAboutDialog;component/AboutPage.xaml", UriKind.Relative));
         }
     }
 }

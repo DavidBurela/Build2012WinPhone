@@ -10,7 +10,7 @@
     xmlns:ETE_ViewModels="clr-namespace:ConferenceStarterKit.ViewModels" 
     xmlns:ETE_Converters="clr-namespace:ConferenceStarterKit.Converters" 
     x:Class="ConferenceStarterKit.MainPage" 
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
 
@@ -133,7 +133,7 @@
                     </ig:XamList.ItemsTemplate>
                 </ig:XamList>
             </controls:PivotItem>
-            
+
             <!--Favourites-->
             <controls:PivotItem Header="favourites" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
                 <ListBox Margin="0,0,-12,0" ItemsSource="{Binding SavedSessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SavedSessionList">
@@ -171,7 +171,7 @@
                     </ig:XamList.ItemLayoutBindings>
                 </ig:XamList>
             </controls:PivotItem>
-            
+
             <!--Information-->
             <!--<controls:PivotItem Header="information">
                 <Grid Margin="12,0,0,0">
@@ -215,5 +215,12 @@
             </controls:PivotItem>-->
         </controls:Pivot>
     </Grid>
-
+    
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="About" Click="ApplicationBarAbout_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

@@ -8,9 +8,9 @@ The application was simplified greatly by replacing the custom logic for groupin
 Features
 -------
 
-* List of sessions. Can search within the session title & abstract
-* List of sessions by timeslot, to easily discover sessions are on right now
-* Saving sessions to favourites
+* Search through session code, title &amp; abstract to find exactly what you are looking for!
+* Sessions by timeslot, easily discover which sessions are on right now
+* Save sessions to favourites
 
 Downloading
 --------

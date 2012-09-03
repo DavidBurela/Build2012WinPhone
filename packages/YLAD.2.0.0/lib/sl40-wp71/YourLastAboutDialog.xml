@@ -1,0 +1,599 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YourLastAboutDialog</name>
+    </assembly>
+    <members>
+        <member name="T:YourLastAboutDialog.AboutPage">
+            <summary>
+            Based on and inspired by ideas by Jeff Wilcox:
+            http://www.jeff.wilcox.name/2011/07/my-app-about-page/
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Views.NavigationPhoneApplicationPage">
+            <summary>
+            A class derived from the <c>PhoneApplicationPage</c> class.
+            Makes use of the <c>NavigationViewModelBase</c> view model base class
+            to notify the view model about navigation events.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Views.NavigationPhoneApplicationPage.OnNavigatingFrom(System.Windows.Navigation.NavigatingCancelEventArgs)">
+            <summary>
+            Called just before a page is no longer the active page in a frame.
+            </summary>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.Views.NavigationPhoneApplicationPage.OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Called when a page is no longer the active page in a frame.
+            </summary>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.Views.NavigationPhoneApplicationPage.OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Called when a page becomes the active page in a frame.
+            </summary>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="P:YourLastAboutDialog.Views.NavigationPhoneApplicationPage.NavigationViewModelBase">
+            <summary>
+            Gets the navigation view model base.
+            </summary>
+        </member>
+        <member name="F:YourLastAboutDialog.AboutPage.SelectedPivotItemIndexKey">
+            <summary>
+            A key used to indicate what pivot item should be pre-selected in the about dialog,
+            based on the item index. Use this as query parameter.
+            </summary>
+        </member>
+        <member name="F:YourLastAboutDialog.AboutPage.SelectedPivotItemHeaderKey">
+            <summary>
+            A key used to indicate what pivot item should be pre-selected in the about dialog,
+            based on the item header. Use this as query parameter.
+            </summary>
+        </member>
+        <member name="F:YourLastAboutDialog.AboutPage.ForceBuyButtonKey">
+            <summary>
+            A key used to indicate that the "Buy this app!" button should be shown even when 
+            the app does not run in trial mode (this is helpful if you do not use the built-in
+            trial mode, but are running a free "lite" version of your app). Use this as query
+            parameter, and set the value to "True" to override the default behavior.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.AboutPage.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.AboutPage"/> class.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.AboutPage.OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Called when a page becomes the active page in a frame.
+            </summary>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.AboutPage.OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Called when a page is no longer the active page in a frame.
+            </summary>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.AboutPage.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Commands.RelayCommand`1">
+            <summary>
+            A simple relay command implementation of <c>ICommand</c>.
+            </summary>
+            <typeparam name="T">The type of the command parameter.</typeparam>
+        </member>
+        <member name="M:YourLastAboutDialog.Commands.RelayCommand`1.#ctor(System.Action{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.Commands.RelayCommand"/> class.
+            </summary>
+            <param name="commandAction">The action to relay the command to.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.Commands.RelayCommand`1.#ctor(System.Action{`0},System.Func{`0,System.Boolean})">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.Commands.RelayCommand"/> class.
+            </summary>
+            <param name="commandAction">The action to relay the command to.</param>
+            <param name="canExecuteFunc">The function to execute to determine whether the command can be executed or not.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.Commands.RelayCommand`1.RaiseCanExecuteChanged">
+            <summary>
+            Can be used to force a re-evaluation of the <c>CanExecute</c> method.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Commands.RelayCommand`1.CanExecute(System.Object)">
+            <summary>
+            Determines whether the command can be executed or not.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Commands.RelayCommand`1.Execute(System.Object)">
+            <summary>
+            Executes the command with the given parameter.
+            </summary>
+        </member>
+        <member name="E:YourLastAboutDialog.Commands.RelayCommand`1.CanExecuteChanged">
+            <summary>
+            Occurs when the can execute state of the command has changed.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Commands.RelayCommand">
+            <summary>
+            A convenient class of a relay command that takes no parameters.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Commands.RelayCommand.#ctor(System.Action)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.Commands.RelayCommand"/> class.
+            </summary>
+            <param name="commandAction">The action to relay the command to.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.Commands.RelayCommand.#ctor(System.Action,System.Func{System.Boolean})">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.Commands.RelayCommand"/> class.
+            </summary>
+            <param name="commandAction">The action to relay the command to.</param>
+            <param name="canExecuteFunc">The function to execute to determine whether the command can be executed or not.</param>
+        </member>
+        <member name="T:YourLastAboutDialog.Common.HighlightingConverter">
+            <summary>
+            A value converter that converts an array of strings into a nicely formatted list of text blocks
+            contained in a stack panel. 
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Common.HighlightingConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the source data before passing it to the target for display in the UI.
+            </summary>
+            <param name="value">The source data being passed to the target.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the target dependency property.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>
+            The value to be passed to the target dependency property.
+            </returns>
+        </member>
+        <member name="M:YourLastAboutDialog.Common.HighlightingConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the target data before passing it to the source object.  This method is called only in <see cref="F:System.Windows.Data.BindingMode.TwoWay"/> bindings.
+            </summary>
+            <param name="value">The target data being passed to the source.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the source object.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>
+            The value to be passed to the source object.
+            </returns>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.HighlightingConverter.TextTitleStyle">
+            <summary>
+            Gets or sets the text title style.
+            </summary>
+            <value>
+            The text title style.
+            </value>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.HighlightingConverter.TextNormalStyle">
+            <summary>
+            Gets or sets the text normal style.
+            </summary>
+            <value>
+            The text normal style.
+            </value>
+        </member>
+        <member name="T:YourLastAboutDialog.Common.LocalizationHelper">
+            <summary>
+            A helper class for localization issues.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Common.LocalizationHelper.GetCultureNameLocalizedUri(System.String)">
+            <summary>
+            Gets the country code localized URI. Simply splits the file name part of the uri
+            and adds the current culture name to it, e.g. http://localhost/file.ext
+            and a current culture of "de-DE" is turned into http://localhost/file.de-DE.ext 
+            </summary>
+            <param name="uri">The URI to localize.</param>
+            <returns>The URI, extended by the current culture name between the file name and extension.</returns>
+        </member>
+        <member name="M:YourLastAboutDialog.Common.LocalizationHelper.GetLanguageCodeLocalizedUri(System.String)">
+            <summary>
+            Gets the language code localized URI. Simply splits the file name part of the uri 
+            and adds the current two-letter ISO language name to it, e.g. http://localhost/file.ext
+            and a current culture of "de-DE" is turned into http://localhost/file.de.ext
+            </summary>
+            <param name="uri">The URI to localize.</param>
+            <returns>The URI, extended by the current two-letter ISO language name between the file name and extension.</returns>
+        </member>
+        <member name="T:YourLastAboutDialog.Common.ManifestAppInfo">
+            <summary>
+            Extracts the information contained in the WMAppManifest.xml file.
+            Extended and improved version based on a post by Joost van Schaik:
+            http://dotnetbyexample.blogspot.com/2011/03/easy-access-to-wmappmanifestxml-app.html
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.ManifestAppInfo.Version">
+            <summary>
+            Gets the version string in the WMAppManifest.xml or <c>null</c> if this information could not be retrieved.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.ManifestAppInfo.ProductId">
+            <summary>
+            Gets the product Id in the WMAppManifest.xml or <c>null</c> if this information could not be retrieved.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.ManifestAppInfo.Title">
+            <summary>
+            Gets the title in the WMAppManifest.xml or <c>null</c> if this information could not be retrieved.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.ManifestAppInfo.Genre">
+            <summary>
+            Gets the genre in the WMAppManifest.xml or <c>null</c> if this information could not be retrieved.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.ManifestAppInfo.Description">
+            <summary>
+            Gets the description in the WMAppManifest.xml or <c>null</c> if this information could not be retrieved.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.ManifestAppInfo.Author">
+            <summary>
+            Gets the author in the WMAppManifest.xml or <c>null</c> if this information could not be retrieved.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Common.ManifestAppInfo.Publisher">
+            <summary>
+            Gets the publisher in the WMAppManifest.xml or <c>null</c> if this information could not be retrieved.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Common.StringToVisibilityConverter">
+            <summary>
+            A value converter that determines visibility based on whether a string has content or not.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Common.StringToVisibilityConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the source data before passing it to the target for display in the UI.
+            </summary>
+            <param name="value">The source data being passed to the target.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the target dependency property.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>
+            The value to be passed to the target dependency property.
+            </returns>
+        </member>
+        <member name="M:YourLastAboutDialog.Common.StringToVisibilityConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            Modifies the target data before passing it to the source object.  This method is called only in <see cref="F:System.Windows.Data.BindingMode.TwoWay"/> bindings.
+            </summary>
+            <param name="value">The target data being passed to the source.</param>
+            <param name="targetType">The <see cref="T:System.Type"/> of data expected by the source object.</param>
+            <param name="parameter">An optional parameter to be used in the converter logic.</param>
+            <param name="culture">The culture of the conversion.</param>
+            <returns>
+            The value to be passed to the source object.
+            </returns>
+        </member>
+        <member name="T:YourLastAboutDialog.Models.ItemData">
+            <summary>
+            A container class for all the information needed to create a pivot item.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.ItemData.Title">
+            <summary>
+            The title of the pivot item.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.ItemData.Uri">
+            <summary>
+            The uri where the content of the page should be downloaded from.
+            If this is <c>null</c>, the <see cref="P:YourLastAboutDialog.Models.ItemData.OfflineContent"/> is used.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.ItemData.Type">
+            <summary>
+            The type of the content, used for the formatting/preparation of the page.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.ItemData.OfflineContent">
+            <summary>
+            The alternate content that is used when downloading the content from the remote
+            <c>Uri</c> fails, or if no <c>Uri</c> is given at all. The <see cref="P:YourLastAboutDialog.Models.ItemData.Type"/> property
+            is respected for this content too.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Models.ItemType">
+            <summary>
+            The possible content type of items.
+            </summary>
+        </member>
+        <member name="F:YourLastAboutDialog.Models.ItemType.Text">
+            <summary>
+            The item contains text content.
+            </summary>
+        </member>
+        <member name="F:YourLastAboutDialog.Models.ItemType.Xaml">
+            <summary>
+            The item contains XAML content.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Models.LinkData">
+            <summary>
+            A container class for all the information required to build a hyperlink button element.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.LinkData.Empty">
+            <summary>
+            An empty link data object.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.LinkData.NavigateUri">
+            <summary>
+            The uri used as navigation target.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.LinkData.Content">
+            <summary>
+            The content used as display.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.LinkData.Label">
+            <summary>
+            An additional label that is not part of the hyperlink button.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Models.MainItemData">
+            <summary>
+            A container class for all the information needed to create the main item.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.Title">
+            <summary>
+            The title of the main item.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.AppAuthorLabel">
+            <summary>
+            The label that should be used for the author. Default is "by".
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.AppDescriptionLabel">
+            <summary>
+            The label that should be used for the description. Default is "Description:".
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.AppPublisherLabel">
+            <summary>
+            The label that should be used for the publisher. Default is "Publisher:".
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.AppVersionLabel">
+            <summary>
+            The label that should be used for the version. Default is "Version:".
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.AppAdditionalNotesLabel">
+            <summary>
+            The label that should be used for the additional notes. Default is "Additional notes:".
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.AppReviewButtonContent">
+            <summary>
+            The content that should be used for the review button. Default is "Review this app!".
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.Models.MainItemData.AppBuyButtonContent">
+            <summary>
+            The content that should be used for the buy button. Default is "Buy this app!".
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.ViewModels.AboutViewModel">
+            <summary>
+            A view model for the about page and its items.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.ViewModels.NavigationViewModelBase">
+            <summary>
+            A view model base class that abstracts the navigation features of Silverlight's page model.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.ViewModels.ViewModelBase">
+            <summary>
+            A simple base class for view models that implements the <c>INotifyPropertyChanged</c> interface.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.ViewModelBase.RaisePropertyChanged(System.String)">
+            <summary>
+            Raises the property changed event.
+            </summary>
+            <param name="propertyName">The name of the property that has changed.</param>
+        </member>
+        <member name="E:YourLastAboutDialog.ViewModels.ViewModelBase.PropertyChanged">
+            <summary>
+            Occurs when a property value changes.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.NavigationViewModelBase.OnNavigatingFrom(System.Windows.Navigation.NavigatingCancelEventArgs)">
+            <summary>
+            Raises the <see cref="E:NavigatingFrom"/> event.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Navigation.NavigatingCancelEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.NavigationViewModelBase.OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Raises the <see cref="E:NavigatedFrom"/> event.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Navigation.NavigationEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.NavigationViewModelBase.OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Raises the <see cref="E:NavigatedTo"/> event.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Navigation.NavigationEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.NavigationViewModelBase.InternalNavigatingFrom(System.Windows.Navigation.NavigatingCancelEventArgs)">
+            <summary>
+            The internal navigating from method.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Navigation.NavigatingCancelEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.NavigationViewModelBase.InternalNavigatedFrom(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            The internal navigated from method.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Navigation.NavigationEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.NavigationViewModelBase.InternalNavigatedTo(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            The internal navigated to method.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Navigation.NavigationEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.NavigationViewModelBase.NavigationContext">
+            <summary>
+            Gets or sets the current navigation context.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.AboutViewModel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.ViewModels.AboutViewModel"/> class.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.AboutViewModel.OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Invoked when the page is being navigated to.
+            </summary>
+            <param name="e">The <see cref="T:System.Windows.Navigation.NavigationEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.MainItemData">
+            <summary>
+            Gets or sets the main item data that is displayed in the first pivot item.
+            </summary>
+            <value>
+            The main page data.
+            </value>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.Items">
+            <summary>
+            The list of items that should be shown.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.Links">
+            <summary>
+            The links that should be added to the list of links on the main pivot item.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationDescription">
+            <summary>
+            The description of the application.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationPublisher">
+            <summary>
+            The publisher of the application.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationAuthor">
+            <summary>
+            The author of the application.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationVersion">
+            <summary>
+            The version of the application.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationTitle">
+            <summary>
+            The title of the application.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationTitleUpper">
+            <summary>
+            The application title converted to upper case.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationProductId">
+            <summary>
+            The product ID of the application.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ApplicationFullVersionProductId">
+            <summary>
+            The alternate product ID of the application's full version.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.AdditionalNotes">
+            <summary>
+            Additional notes that should be displayed on the main item.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.ReviewCommand">
+            <summary>
+            Wraps the review application operation.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.BuyCommand">
+            <summary>
+            Wraps the buy application operation.
+            </summary>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.AboutViewModel.BuyOptionVisibility">
+            <summary>
+            Gets or sets whether the buy options in the UI should be visible or not.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.ViewModels.GenericItemViewModel">
+            <summary>
+            A view model for the generic pivot item pages.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.ViewModels.GenericItemViewModel.#ctor(YourLastAboutDialog.Models.ItemData)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.ViewModels.GenericItemViewModel"/> class using the specified item data.
+            </summary>
+            <param name="data">The item data used to configure the view model.</param>
+        </member>
+        <member name="P:YourLastAboutDialog.ViewModels.GenericItemViewModel.Content">
+            <summary>
+            The content of the pivot item. 
+            Usually this will be some visual element, but it can also be pure text.
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Views.ApplicationInfoView">
+            <summary>
+            A view for general application information.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Views.ApplicationInfoView.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.Views.ApplicationInfoView"/> class.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Views.ApplicationInfoView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:YourLastAboutDialog.Views.GenericItemView">
+            <summary>
+            A view for a generic page (pivot) item.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Views.GenericItemView.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YourLastAboutDialog.Views.GenericItemView"/> class.
+            </summary>
+        </member>
+        <member name="M:YourLastAboutDialog.Views.GenericItemView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+    </members>
+</doc>
