@@ -27,7 +27,8 @@ namespace ConferenceStarterKit.Services
         {
             ObservableCollection<SessionItemModel> Sessions = new ObservableCollection<SessionItemModel>();
 
-            Sessions.Add(new SessionItemModel { Date = DateTime.Now, Description = "Some session information that I am sure you would like", Title = "Introduction To WP" });
+            Sessions.Add(new SessionItemModel { Date = DateTime.Now, Description = "Some session information that I am sure you would like", Code = "DEV123", Title = "Introduction To WP" });
+            Sessions.Add(new SessionItemModel { Date = DateTime.Now, Description = "Some session information that I am sure you would like", Code = "DEV456", Title = "A really long session name that keeps going" });
 
             return Sessions;
         }

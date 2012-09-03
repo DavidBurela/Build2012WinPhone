@@ -15,6 +15,7 @@ namespace ConferenceStarterKit.ViewModels
     public class SessionItemModel : ModelBase
     {
         private int _id;
+        private string _code;
         private string _title;
         private DateTime _date;
         private string _description;
@@ -37,6 +38,17 @@ namespace ConferenceStarterKit.ViewModels
                     return;
                 _id = value;
                 NotifyPropertyChanged("Id");
+            }
+        }
+        public string Code
+        {
+            get { return _code; }
+            set
+            {
+                if (_code == value)
+                    return;
+                _code = value;
+                NotifyPropertyChanged("Code");
             }
         }
         public string Title

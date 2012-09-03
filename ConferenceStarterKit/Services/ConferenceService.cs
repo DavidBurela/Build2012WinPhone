@@ -114,15 +114,17 @@ namespace ConferenceStarterKit.Services
                     var sessionData = svcContext.EndExecute(result);
 
                     var converted = (from s in ((IEnumerable<SessionTemp>)sessionData)
-                                    select new SessionItemModel
-                                               {
-                                                   Title = s.Title,
-                                                   Description = StripHtmlTags(s.Description),
-                                                   Location = s.Room,
-                                                   Id = s.SessionId,
-                                                   Date = (DateTime)s.StartTime,
-                                                   Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last }).ToObservableCollection()
-                                               }).ToList();
+                                     orderby s.Code
+                                     select new SessionItemModel
+                                                {
+                                                    Code = s.Code,
+                                                    Title = s.Title,
+                                                    Description = StripHtmlTags(s.Description),
+                                                    Location = s.Room,
+                                                    Id = s.SessionId,
+                                                    Date = (DateTime)s.StartTime,
+                                                    Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last }).ToObservableCollection()
+                                                }).ToList();
 
                     // Update the SessionList collection. Then mark everything as loaded
                     System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
@@ -134,12 +136,8 @@ namespace ConferenceStarterKit.Services
                     });
 
 
-                    // save the results into the cache
-                    // Serialize our collection.
-                    
-
-
-                    // save the data
+                    // Save the results into the cache.
+                    // First save the data
                     if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
                         IsolatedStorageSettings.ApplicationSettings.Remove("SessionData");
                     IsolatedStorageSettings.ApplicationSettings.Add("SessionData", converted);
@@ -148,7 +146,7 @@ namespace ConferenceStarterKit.Services
                     if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
                         IsolatedStorageSettings.ApplicationSettings.Remove("SessionLastDownload");
                     IsolatedStorageSettings.ApplicationSettings.Add("SessionLastDownload", DateTime.Now);
-                    IsolatedStorageSettings.ApplicationSettings.Save();
+                    IsolatedStorageSettings.ApplicationSettings.Save(); // trigger a save
 
                 }
             }

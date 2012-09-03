@@ -53,6 +53,9 @@
     <Reference Include="Coding4Fun.Phone.Controls">
       <HintPath>..\packages\Coding4Fun.Phone.Controls.1.5.1\lib\Coding4Fun.Phone.Controls.dll</HintPath>
     </Reference>
+    <Reference Include="InfragisticsWP7.Controls.Grids.XamList.v12.1, Version=12.1.20121.1032, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="InfragisticsWP7.Controls.Interactions.XamWindow.v12.1, Version=12.1.20121.1032, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="InfragisticsWP7.v12.1, Version=12.1.20121.1032, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />

@@ -17,20 +17,20 @@ namespace ConferenceStarterKit
         public MainPage()
         {
             InitializeComponent();
-  
+
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
 
         // Load data for the ViewModel Items 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-  
+
 
         }
 
         private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            App.CurrentSpeaker = (SpeakerItemModel) SpeakerList.SelectedItem;
+            App.CurrentSpeaker = (SpeakerItemModel)SpeakerList.SelectedItem;
             NavigationService.Navigate(new System.Uri("/SpeakerPage.xaml", System.UriKind.Relative));
         }
 
@@ -151,7 +151,7 @@ namespace ConferenceStarterKit
             }
         }
 
-  
+
         // hack until we get the data loading completly
         int _temp = 0;
         private void Panorama_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -169,7 +169,7 @@ namespace ConferenceStarterKit
                 SessionByTime.ItemsSource = sessionByTimeSlot;
                 _temp++;
             }
-            
+
         }
 
         private void contact_Tap(object sender, System.Windows.Input.GestureEventArgs e)
@@ -192,19 +192,19 @@ namespace ConferenceStarterKit
             NavigationService.Navigate(new System.Uri("/Transportation.xaml", System.UriKind.Relative));
         }
 
-        
+
         private void Filter_Click(object sender, RoutedEventArgs e)
         {
             InputPrompt input = new InputPrompt();
-            input.Completed += new EventHandler<PopUpEventArgs<string, PopUpResult>>(input_Completed); 
-            input.Title = "Search Sessions"; 
+            input.Completed += new EventHandler<PopUpEventArgs<string, PopUpResult>>(input_Completed);
+            input.Title = "Search Sessions";
             input.Message = "enter a keyword";
             input.Show();
         }
         SessionItemModel[] sessionTemp;
         void input_Completed(object sender, PopUpEventArgs<string, PopUpResult> e)
         {
-            MainViewModel vm = (MainViewModel) LayoutRoot.DataContext;
+            MainViewModel vm = (MainViewModel)LayoutRoot.DataContext;
 
             vm.Filter = e.Result;
 
@@ -219,7 +219,7 @@ namespace ConferenceStarterKit
                          select s;
 
             var filterlist = filter.ToList();
-            
+
             vm.Sessions.Clear();
             vm.Sessions = filterlist.ToList().ToObservableCollection(vm.Sessions);
         }
@@ -229,7 +229,7 @@ namespace ConferenceStarterKit
             MainViewModel vm = (MainViewModel)LayoutRoot.DataContext;
             vm.Sessions.Clear();
             vm.Sessions = sessionTemp.ToList().ToObservableCollection(vm.Sessions);
-            vm.Filter = string.Empty; 
+            vm.Filter = string.Empty;
         }
 
 
@@ -252,6 +252,15 @@ namespace ConferenceStarterKit
         {
             App.CurrentSession = (SessionItemModel)SessionByTime.SelectedItem;
             NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
-        } 
+        }
+
+        private void SessionList_ItemClicked(object sender, Infragistics.Controls.Grids.ListItemEventArgs e)
+        {
+            var xamList = (Infragistics.Controls.Grids.XamList)sender;
+            App.CurrentSession = e.Item.Data as SessionItemModel;
+            if (App.CurrentSession != null)
+                //App.CurrentSession = (SessionItemModel)lb.SelectedItem;
+                NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
+        }
     }
 }

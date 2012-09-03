@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage
+﻿<phone:PhoneApplicationPage xmlns:ig="clr-namespace:Infragistics.Controls.Grids;assembly=InfragisticsWP7.Controls.Grids.XamList.v12.1" 
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,36 +14,36 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
 
-	<phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.Resources>
 
-		<ETE_Converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+        <ETE_Converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
 
         <!-- The template for groups when they are items in the "jump list". Not setting -->
-		<ETE_Converters:CountVisibilityConverter x:Key="CountVisibilityConverter"/>
-		<ETE_Converters:CaseConverter x:Key="CaseConverter"/>
-		<ETE_ViewModels:MainViewModel x:Key="MainViewModelDataSource" d:IsDataSource="True"/>
+        <ETE_Converters:CountVisibilityConverter x:Key="CountVisibilityConverter"/>
+        <ETE_Converters:CaseConverter x:Key="CaseConverter"/>
+        <ETE_ViewModels:MainViewModel x:Key="MainViewModelDataSource" d:IsDataSource="True"/>
 
         <!--DATA TEMPLATES-->
         <DataTemplate x:Key="SessionItemTemplate">
-        	
-	            <StackPanel Margin="0,0,0,17" Tap="ScheduleTap">
-	                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
+
+            <StackPanel Margin="0,0,0,17" Tap="ScheduleTap">
+                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
                 <StackPanel Orientation="Horizontal">
-                 
-                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
+
+                    <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
 	                    <TextBlock.Foreground>
 	                        <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
 	                    </TextBlock.Foreground>
-	                </TextBlock>
-					     <TextBlock Text="{Binding Location}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
+                    </TextBlock>
+                    <TextBlock Text="{Binding Location}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
 	                    <TextBlock.Foreground>
 	                        <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
 	                    </TextBlock.Foreground>
-	                </TextBlock>
+                    </TextBlock>
                 </StackPanel>
 
             </StackPanel>
-			
+
         </DataTemplate>
 
 
@@ -58,7 +58,7 @@
                            HorizontalAlignment="Left"
                            VerticalAlignment="Bottom"
                            FontFamily="{StaticResource PhoneFontFamilySemiBold}"/>
-                
+
             </Border>
         </DataTemplate>
 
@@ -81,34 +81,34 @@
 
 
     </phone:PhoneApplicationPage.Resources>
-	<phone:PhoneApplicationPage.Background>
-		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-	</phone:PhoneApplicationPage.Background>
- 
+    <phone:PhoneApplicationPage.Background>
+        <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+    </phone:PhoneApplicationPage.Background>
+
     <!--Panorama-based applications should not show an ApplicationBar-->
 
-	<phone:PhoneApplicationPage.FontFamily>
-		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
-	</phone:PhoneApplicationPage.FontFamily>
-	<phone:PhoneApplicationPage.FontSize>
-		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
-	</phone:PhoneApplicationPage.FontSize>
-	<phone:PhoneApplicationPage.Foreground>
-		<StaticResource ResourceKey="PhoneAccentBrush"/>
-	</phone:PhoneApplicationPage.Foreground>
-    
-    
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneAccentBrush"/>
+    </phone:PhoneApplicationPage.Foreground>
+
+
 
 
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{Binding Source={StaticResource MainViewModelDataSource}}">
- 
+
         <!--Panorama control-->
-		 <!--Title="{Binding ApplicationName, ConverterParameter=l, Converter={StaticResource CaseConverter}, Mode=OneWay}"-->
+        <!--Title="{Binding ApplicationName, ConverterParameter=l, Converter={StaticResource CaseConverter}, Mode=OneWay}"-->
         <controls:Panorama Foreground="White"  SelectionChanged="Panorama_SelectionChanged"  >
-        	<controls:Panorama.Title>
-        		     
+            <controls:Panorama.Title>
+
                 <StackPanel Orientation="Horizontal" Margin="0,80,0,0">
                     <Image Source="/ete2012philadelphia.png" Height="112" Width="600" ></Image>
                 </StackPanel>
@@ -117,27 +117,42 @@
             <controls:Panorama.Background>
                 <ImageBrush ImageSource="/PanoramaBackground.png"/>
             </controls:Panorama.Background>
- 
+
             <!--Panorama item one-->
             <controls:PanoramaItem>
-            	<controls:PanoramaItem.Header>
+                <controls:PanoramaItem.Header>
                     <StackPanel>
-            		<StackPanel Orientation="Horizontal">
-            			<TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
-                        <Button Margin="0,0,-26,-24" Click="Filter_Click" BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
+                            <!--<Button Margin="0,0,-26,-24" Click="Filter_Click" BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" >
                             <Image Source="/Images/appbar.magnify.png" ></Image>
-                        </Button>
-                        <Button Margin="0,0,0,-24" Click="CloseFilter_Click" BorderThickness="0" Visibility="{Binding Filter, Converter={StaticResource StringVisibilityConverter}, Mode=TwoWay}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" >
+                        </Button>-->
+                            <!--<Button Margin="0,0,0,-24" Click="CloseFilter_Click" BorderThickness="0" Visibility="{Binding Filter, Converter={StaticResource StringVisibilityConverter}, Mode=TwoWay}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" >
                             <Image Source="/Images/appbar.close.png" ></Image>
-                        </Button>
-                    
+                        </Button>-->
+
                         </StackPanel>
                         <toolkit:PerformanceProgressBar IsIndeterminate="{Binding IsLoading, Mode=TwoWay}"  />
 
                     </StackPanel>
-            	</controls:PanoramaItem.Header>
- 
-                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Sessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SessionList" Foreground="White">
+                </controls:PanoramaItem.Header>
+
+                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" Foreground="White" ItemClicked="SessionList_ItemClicked">
+                    <ig:XamList.ItemsTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,17" >
+                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding Code}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
+                                	<TextBlock.Foreground>
+                                		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                                	</TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ig:XamList.ItemsTemplate>
+                </ig:XamList>
+                <!--<ListBox Margin="0,0,-12,0" ItemsSource="{Binding Sessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SessionList" Foreground="White">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >                                
@@ -150,11 +165,11 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
-                
-                
+                </ListBox>-->
+
+
             </controls:PanoramaItem>
- 
+
             <!--Panorama item two-->
             <!--Use 'Orientation="Horizontal"' to enable a panel that lays out horizontally-->
             <controls:PanoramaItem Header="speakers">
@@ -172,16 +187,16 @@
                                 <Rectangle Height="170" Width="170" Fill="{StaticResource PhoneAccentBrush}" ></Rectangle>
                                 <Image Height="165" Width="165" Stretch="UniformToFill" Source="{Binding PictureUrl}"   />
                                 <StackPanel Height="25" Width="165"  VerticalAlignment="Bottom"  Background="#AF000000" Margin="0,0,0,5">
-					            	
-									<StackPanel Orientation="Horizontal">
-										<TextBlock Height="165" VerticalAlignment="Bottom" Text="{Binding FirstName, ConverterParameter=l, Converter={StaticResource CaseConverter}}"  Style="{StaticResource PhoneTextSubtleStyle}" Foreground="White" Margin="6,0,6,0"/>
-										<TextBlock Height="165" VerticalAlignment="Bottom" Text="{Binding LastName, ConverterParameter=l, Converter={StaticResource CaseConverter}}"  Style="{StaticResource PhoneTextSubtleStyle}" Foreground="White" Margin="0"/>
-									</StackPanel>
-				                
-								
-								</StackPanel>	
-								
-							</Grid>
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Height="165" VerticalAlignment="Bottom" Text="{Binding FirstName, ConverterParameter=l, Converter={StaticResource CaseConverter}}"  Style="{StaticResource PhoneTextSubtleStyle}" Foreground="White" Margin="6,0,6,0"/>
+                                        <TextBlock Height="165" VerticalAlignment="Bottom" Text="{Binding LastName, ConverterParameter=l, Converter={StaticResource CaseConverter}}"  Style="{StaticResource PhoneTextSubtleStyle}" Foreground="White" Margin="0"/>
+                                    </StackPanel>
+
+
+                                </StackPanel>
+
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
@@ -192,28 +207,28 @@
                         <DataTemplate>
                             <Grid>
                                 <toolkit:ContextMenuService.ContextMenu >
-                                <toolkit:ContextMenu  ItemsSource="{Binding}"  HorizontalAlignment="Left" Margin="0,0,0,0" Name="contextMenu1" VerticalAlignment="Center"  Width="150" Height="100" >
-                                    <toolkit:MenuItem  CommandParameter="{Binding Title}" Header="Remove from Reminders" Click="MenuItem_Click" Tag="DELETE" VerticalAlignment="Center" Width="400" Height="75"/>
-                                </toolkit:ContextMenu>
-                            </toolkit:ContextMenuService.ContextMenu>
-                            <StackPanel Margin="0,0,0,17" >
-                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
-                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
+                                    <toolkit:ContextMenu  ItemsSource="{Binding}"  HorizontalAlignment="Left" Margin="0,0,0,0" Name="contextMenu1" VerticalAlignment="Center"  Width="150" Height="100" >
+                                        <toolkit:MenuItem  CommandParameter="{Binding Title}" Header="Remove from Reminders" Click="MenuItem_Click" Tag="DELETE" VerticalAlignment="Center" Width="400" Height="75"/>
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+                                <StackPanel Margin="0,0,0,17" >
+                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
+                                    <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
                                 	<TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                                 	</TextBlock.Foreground>
-                                </TextBlock>
-                            </StackPanel>
+                                    </TextBlock>
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
-                  	</ListBox.ItemTemplate>
-				  </ListBox>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
             </controls:PanoramaItem>
 
             <controls:PanoramaItem >
-            	<controls:PanoramaItem.Header>
-            		<StackPanel Orientation="Horizontal">
+                <controls:PanoramaItem.Header>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock Text="schedule" Margin="0,0,24,0"></TextBlock>
                         <!--<Button>
                             <Image Source="/Images/up.png" Margin="0,0,24,-24"></Image>
@@ -222,7 +237,7 @@
                             <Image Source="/Images/down.png" Margin="0,0,0,-24"></Image>
                         </Button>-->
                     </StackPanel>
-            	</controls:PanoramaItem.Header>
+                </controls:PanoramaItem.Header>
 
 
 
@@ -234,24 +249,24 @@
                                           GroupViewOpened="LongListSelector_GroupViewOpened"
                                           GroupViewClosing="LongListSelector_GroupViewClosing">
 
-                       
-                    </toolkit:LongListSelector>
+
+                </toolkit:LongListSelector>
 
 
 
             </controls:PanoramaItem>
 
             <controls:PanoramaItem Header="information">
-            	<Grid Margin="12,0,0,0">
-            		<Grid.ColumnDefinitions>
-            			<ColumnDefinition Width="0.5*"/>
-            			<ColumnDefinition Width="0.5*"/>
-            		</Grid.ColumnDefinitions>
-            		<Grid.RowDefinitions>
-            			<RowDefinition Height="0.25*"/>
-            			<RowDefinition Height="0.25*"/>
-            			<RowDefinition Height="0.25*"/>
-            		</Grid.RowDefinitions>
+                <Grid Margin="12,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.25*"/>
+                        <RowDefinition Height="0.25*"/>
+                        <RowDefinition Height="0.25*"/>
+                    </Grid.RowDefinitions>
 
                     <toolkit:HubTile Grid.Row="0" Grid.Column="0" 
                                          Margin="12,12,0,0"
