@@ -22,6 +22,7 @@ Packages used
 
 * Windows Phone Starter Kit for Conferences - [http://smallandmighty.net/blog/windows-phone-starter-kit-for-conferences](http://smallandmighty.net/blog/windows-phone-starter-kit-for-conferences)
 * YLAD (Your Last About Dialog) - [http://ylad.codeplex.com/](http://ylad.codeplex.com/)
+* Windows Phone Icons Maker [http://wpiconmaker.codeplex.com/](http://wpiconmaker.codeplex.com/)
 
 Notes
 --------
