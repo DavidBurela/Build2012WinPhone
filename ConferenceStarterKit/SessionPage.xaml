@@ -23,8 +23,8 @@
 	<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <!--<shell:ApplicationBarIconButton x:Name="appbar_pin" IconUri="/Images/appbar.pin.png" Text="pin" Click="appbar_pin_Click"/>-->
-            <shell:ApplicationBarIconButton x:Name="appbar_add" IconUri="/Images/appbar.calendar.png" Text="add" Click="appbar_add_Click"/>
-            <shell:ApplicationBarIconButton x:Name="appbar_send" IconUri="/Images/appbar.reply.email.png" Text="add" Click="appbar_send_Click"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_add" IconUri="/Images/appbar.favs.addto.rest.png" Text="add" Click="appbar_add_Click"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_send" IconUri="/Images/appbar.reply.email.png" Text="send" Click="appbar_send_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     
@@ -46,19 +46,36 @@
             <controls:PivotItem Header="session">
                 <Grid>
                 	<ScrollViewer Margin="0,0,0,0">
-            			<StackPanel Margin="12,0" VerticalAlignment="Top">                		
-	                		<TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="title" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Title, Converter={StaticResource StringVisibilityConverter}}">
+            			<StackPanel Margin="12,0" VerticalAlignment="Top">
+                            <!--Title-->
+                            <TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="code" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Code, Converter={StaticResource StringVisibilityConverter}}">
+	                			<TextBlock.Foreground>
+	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+	                			</TextBlock.Foreground>
+	                		</TextBlock>
+	                		<TextBlock Margin="0,0,12,6" TextWrapping="Wrap" Text="{Binding Session.Code}"/>
+	                		<!--Title-->
+                            <TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="title" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Title, Converter={StaticResource StringVisibilityConverter}}">
 	                			<TextBlock.Foreground>
 	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
 	                			</TextBlock.Foreground>
 	                		</TextBlock>
 	                		<TextBlock Margin="0,0,12,6" TextWrapping="Wrap" Text="{Binding Session.Title}"/>
+                            <!--Time-->
 	                		<TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="time" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Title, Converter={StaticResource StringVisibilityConverter}}">
 	                			<TextBlock.Foreground>
 	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
 	                			</TextBlock.Foreground>
 	                		</TextBlock>
 	                		<TextBlock Margin="0,0,12,6" TextWrapping="Wrap" Text="{Binding Session.Date}"/>
+                            <!--Location-->
+                            <TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="location" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Location, Converter={StaticResource StringVisibilityConverter}}">
+	                			<TextBlock.Foreground>
+	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+	                			</TextBlock.Foreground>
+                            </TextBlock>
+                            <TextBlock Margin="0,0,12,6" TextWrapping="Wrap" Text="{Binding Session.Location}"/>
+                            <!--Description-->
 	                		<TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="description" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Title}">
 	                			<TextBlock.Foreground>
 	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>

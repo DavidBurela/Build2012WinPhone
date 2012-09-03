@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Collections.ObjectModel;
 using System.Windows.Shapes;
 using ConferenceStarterKit.ViewModels;
+using Infragistics.Controls.Interactions;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using Microsoft.Phone.Scheduler;
@@ -31,7 +33,7 @@ namespace ConferenceStarterKit
 
         private void appbar_add_Click(object sender, EventArgs e)
         {
-            SessionViewModel vm = (SessionViewModel) this.LayoutRoot.DataContext;
+            SessionViewModel vm = (SessionViewModel)this.LayoutRoot.DataContext;
             bool found = false;
 
             foreach (SessionItemModel s in App.SavedSessions)
@@ -55,10 +57,18 @@ namespace ConferenceStarterKit
                     reminder.RecurrenceType = RecurrenceInterval.None;
 
                     ScheduledActionService.Add(reminder);
+                    XamMessageBox.Show("Favourite added", "The session was added to your favourites. And a reminder added to your phone",
+                        () => { },
+                        VerticalPosition.Center,
+                        new XamMessageBoxCommand("OK", () => { }));
                 }
                 catch (Exception)
                 {
-                   //need to let use know we cound not add a reminder?
+                    //need to let use know we cound not add a reminder?
+                    XamMessageBox.Show("Already a favourite", "This session is already a favourite.",
+                        () => { },
+                        VerticalPosition.Center,
+                        new XamMessageBoxCommand("OK", () => { }));
                 }
 
             }
@@ -66,9 +76,23 @@ namespace ConferenceStarterKit
 
         private void appbar_send_Click(object sender, EventArgs e)
         {
+            var vm = (SessionViewModel)this.LayoutRoot.DataContext;
+            var session = vm.Session;
+
             EmailComposeTask email = new EmailComposeTask();
-            email.Subject = "This Session at ConferenceStarterKit Might be of Interest";
-            email.Body = "";
+            email.Subject = "This session at TechEd might be of interest";
+            var sb = new StringBuilder();
+            sb.Append("Code: ");
+            sb.AppendLine(session.Code);
+            sb.Append("Title: ");
+            sb.AppendLine(session.Title);
+            sb.Append("Time: ");
+            sb.AppendLine(session.Date.ToShortDateString() + " " + session.Date.ToShortTimeString());
+            sb.Append("Room: ");
+            sb.AppendLine(session.Location);
+            sb.Append("Description: ");
+            sb.AppendLine(session.Description);
+            email.Body = sb.ToString();
 
             email.Show();
 

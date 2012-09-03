@@ -86,7 +86,7 @@
                 <Image Source="/ete2012philadelphia.png" Height="112" Width="600" ></Image>
             </controls:Pivot.Title>
 
-            <!--Pivot item one-->
+            <!--Sessions-->
             <controls:PivotItem>
                 <controls:PivotItem.Header>
                     <StackPanel>
@@ -114,8 +114,7 @@
 
             </controls:PivotItem>
 
-            <!--Pivot item two-->
-            <!--Use 'Orientation="Horizontal"' to enable a panel that lays out horizontally-->
+            <!--Speakers-->
             <controls:PivotItem Header="speakers">
                 <!--Double line list with image placeholder and text wrapping-->
                 <ig:XamList Name="SpeakerList" Margin="0,0,-12,0" ItemsSource="{Binding Speakers}" ItemLayout="ThumbnailTitleAndDescription">
@@ -129,7 +128,9 @@
                     </ig:XamList.ItemLayoutBindings>
                 </ig:XamList>
             </controls:PivotItem>
-            <controls:PivotItem Header="reminders" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
+            
+            <!--Favourites-->
+            <controls:PivotItem Header="favourites" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
                 <ListBox Margin="0,0,-12,0" ItemsSource="{Binding SavedSessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SavedSessionList">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -154,6 +155,7 @@
 
             </controls:PivotItem>
 
+            <!--Schedule-->
             <controls:PivotItem >
                 <controls:PivotItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -169,8 +171,6 @@
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
-                                <!--<TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
-                                <TextBlock Text="{Binding Code}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" Foreground="White"/>-->
                                 <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
                                 <TextBlock Text="{Binding Location}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" >
                                     <TextBlock.Foreground>
@@ -181,23 +181,9 @@
                         </DataTemplate>
                     </ig:XamList.ItemsTemplate>
                 </ig:XamList>
-
-
-                <!--<toolkit:LongListSelector x:Name="SessionByTime" IsFlatList="False"  Background="Transparent" 
-                                          
-                                          GroupHeaderTemplate="{StaticResource SessionGroupHeader}"
-                                          GroupItemTemplate="{StaticResource GroupItemHeader}"
-                                          ItemTemplate="{StaticResource SessionItemTemplate}"
-                                          GroupViewOpened="LongListSelector_GroupViewOpened"
-                                          GroupViewClosing="LongListSelector_GroupViewClosing">
-
-
-                </toolkit:LongListSelector>-->
-
-
-
             </controls:PivotItem>
 
+            <!--Information-->
             <controls:PivotItem Header="information">
                 <Grid Margin="12,0,0,0">
                     <Grid.ColumnDefinitions>

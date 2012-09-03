@@ -28,7 +28,7 @@
                         <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                     </TextBlock.Foreground>
                 </TextBlock>
-                <TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding FirstName}" VerticalAlignment="Top"/>
+                <TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding SurnameFirstname}" VerticalAlignment="Top"/>
 				<TextBlock Grid.Column="1" Margin="12,0,0,0" TextWrapping="Wrap" Text="position" VerticalAlignment="Top" Visibility="{Binding Position, Converter={StaticResource StringVisibilityConverter}}" FontFamily="Segoe WP Black" FontSize="24">
 					<TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
