@@ -226,8 +226,6 @@
     <Content Include="Images\bed.png" />
     <Content Include="Images\calend.png" />
     <Content Include="Images\down.png" />
-    <Content Include="Images\ETEIcon.png" />
-    <Content Include="Images\ETETile.png" />
     <Content Include="Images\pinchtz.png" />
     <Content Include="Images\up.png" />
     <None Include="Service References\TechEdServiceReference\Reference.datasvcmap">
