@@ -57,7 +57,7 @@ namespace ConferenceStarterKit
                     reminder.RecurrenceType = RecurrenceInterval.None;
 
                     ScheduledActionService.Add(reminder);
-                    XamMessageBox.Show("Favourite added", "The session was added to your favourites. And a reminder added to your phone",
+                    XamMessageBox.Show("Favourite added", "The session was added to your favourites.",
                         () => { },
                         VerticalPosition.Center,
                         new XamMessageBoxCommand("OK", () => { }));

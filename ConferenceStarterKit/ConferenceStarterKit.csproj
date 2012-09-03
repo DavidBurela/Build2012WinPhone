@@ -208,11 +208,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\appbar.favs.addto.rest.png" />
+    <Content Include="Images\techedheader.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
-    <Content Include="ete2012philadelphia.png" />
     <Content Include="Images\appbar.close.png" />
     <Content Include="Images\email.png" />
     <Content Include="Images\info.png" />

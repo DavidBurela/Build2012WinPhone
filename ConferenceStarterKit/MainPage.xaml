@@ -53,8 +53,6 @@
             </Border>
         </DataTemplate>
 
-
-
     </phone:PhoneApplicationPage.Resources>
     <phone:PhoneApplicationPage.Background>
         <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
@@ -72,10 +70,6 @@
         <StaticResource ResourceKey="PhoneAccentBrush"/>
     </phone:PhoneApplicationPage.Foreground>
 
-
-
-
-
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{Binding Source={StaticResource MainViewModelDataSource}}">
 
@@ -83,7 +77,7 @@
         <!--Title="{Binding ApplicationName, ConverterParameter=l, Converter={StaticResource CaseConverter}, Mode=OneWay}"-->
         <controls:Pivot Foreground="White" >
             <controls:Pivot.Title>
-                <Image Source="/ete2012philadelphia.png" Height="112" Width="600" ></Image>
+                <Image Source="/Images/techedheader.png" Height="100" HorizontalAlignment="Left" ></Image>
             </controls:Pivot.Title>
 
             <!--Sessions-->
@@ -99,8 +93,6 @@
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
-                                <!--<TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
-                                <TextBlock Text="{Binding Code}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" Foreground="White"/>-->
                                 <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
                                 <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
                                 	<TextBlock.Foreground>
@@ -111,47 +103,6 @@
                         </DataTemplate>
                     </ig:XamList.ItemsTemplate>
                 </ig:XamList>
-
-            </controls:PivotItem>
-
-            <!--Speakers-->
-            <controls:PivotItem Header="speakers">
-                <!--Double line list with image placeholder and text wrapping-->
-                <ig:XamList Name="SpeakerList" Margin="0,0,-12,0" ItemsSource="{Binding Speakers}" ItemLayout="ThumbnailTitleAndDescription">
-                    <ig:XamList.ItemLayoutBindings>
-                        <ig:ItemLayoutBinding ItemLayoutProperty="Title"
-                                          Path="SurnameFirstname" />
-                        <ig:ItemLayoutBinding ItemLayoutProperty="Description"
-                                          Path="Twitter" />
-                        <ig:ItemLayoutBinding ItemLayoutProperty="ThumbnailSource"
-                                          Path="ImageResourcePath" />
-                    </ig:XamList.ItemLayoutBindings>
-                </ig:XamList>
-            </controls:PivotItem>
-            
-            <!--Favourites-->
-            <controls:PivotItem Header="favourites" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
-                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding SavedSessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SavedSessionList">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <toolkit:ContextMenuService.ContextMenu >
-                                    <toolkit:ContextMenu  ItemsSource="{Binding}"  HorizontalAlignment="Left" Margin="0,0,0,0" Name="contextMenu1" VerticalAlignment="Center"  Width="150" Height="100" >
-                                        <toolkit:MenuItem  CommandParameter="{Binding Title}" Header="Remove from Reminders" Click="MenuItem_Click" Tag="DELETE" VerticalAlignment="Center" Width="400" Height="75"/>
-                                    </toolkit:ContextMenu>
-                                </toolkit:ContextMenuService.ContextMenu>
-                                <StackPanel Margin="0,0,0,17" >
-                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
-                                    <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
-                                	<TextBlock.Foreground>
-                                		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                                	</TextBlock.Foreground>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
 
             </controls:PivotItem>
 
@@ -182,9 +133,47 @@
                     </ig:XamList.ItemsTemplate>
                 </ig:XamList>
             </controls:PivotItem>
+            
+            <!--Favourites-->
+            <controls:PivotItem Header="favourites" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
+                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding SavedSessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SavedSessionList">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <toolkit:ContextMenuService.ContextMenu >
+                                    <toolkit:ContextMenu  ItemsSource="{Binding}"  HorizontalAlignment="Left" Margin="0,0,0,0" Name="contextMenu1" VerticalAlignment="Center"  Width="150" Height="100" >
+                                        <toolkit:MenuItem  CommandParameter="{Binding Title}" Header="Remove from Reminders" Click="MenuItem_Click" Tag="DELETE" VerticalAlignment="Center" Width="400" Height="75"/>
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+                                <StackPanel Margin="0,0,0,17" >
+                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
+                                    <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
+                                	<TextBlock.Foreground>
+                                		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                                	</TextBlock.Foreground>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
+            </controls:PivotItem>
+
+            <!--Speakers-->
+            <controls:PivotItem Header="speakers">
+                <!--Double line list with image placeholder and text wrapping-->
+                <ig:XamList Name="SpeakerList" Margin="0,0,-12,0" ItemsSource="{Binding Speakers}" ItemLayout="ThumbnailTitleAndDescription">
+                    <ig:XamList.ItemLayoutBindings>
+                        <ig:ItemLayoutBinding ItemLayoutProperty="Title" Path="SurnameFirstname" />
+                        <ig:ItemLayoutBinding ItemLayoutProperty="Description" Path="Twitter" />
+                        <ig:ItemLayoutBinding ItemLayoutProperty="ThumbnailSource" Path="ImageResourcePath" />
+                    </ig:XamList.ItemLayoutBindings>
+                </ig:XamList>
+            </controls:PivotItem>
+            
             <!--Information-->
-            <controls:PivotItem Header="information">
+            <!--<controls:PivotItem Header="information">
                 <Grid Margin="12,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.5*"/>
@@ -223,8 +212,7 @@
 
 
                 </Grid>
-                <!--Double line list with image placeholder and text wrapping-->
-            </controls:PivotItem>
+            </controls:PivotItem>-->
         </controls:Pivot>
     </Grid>
 
