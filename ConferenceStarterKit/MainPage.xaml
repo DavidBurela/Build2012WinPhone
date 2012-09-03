@@ -60,7 +60,7 @@
         <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
     </phone:PhoneApplicationPage.Background>
 
-    <!--Panorama-based applications should not show an ApplicationBar-->
+    <!--Pivot-based applications should not show an ApplicationBar-->
 
     <phone:PhoneApplicationPage.FontFamily>
         <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
@@ -79,30 +79,23 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{Binding Source={StaticResource MainViewModelDataSource}}">
 
-        <!--Panorama control-->
+        <!--Pivot control-->
         <!--Title="{Binding ApplicationName, ConverterParameter=l, Converter={StaticResource CaseConverter}, Mode=OneWay}"-->
-        <controls:Panorama Foreground="White"  SelectionChanged="Panorama_SelectionChanged"  >
-            <controls:Panorama.Title>
+        <controls:Pivot Foreground="White" >
+            <controls:Pivot.Title>
+                <Image Source="/ete2012philadelphia.png" Height="112" Width="600" ></Image>
+            </controls:Pivot.Title>
 
-                <StackPanel Orientation="Horizontal" Margin="0,80,0,0">
-                    <Image Source="/ete2012philadelphia.png" Height="112" Width="600" ></Image>
-                </StackPanel>
-
-            </controls:Panorama.Title>
-            <controls:Panorama.Background>
-                <ImageBrush ImageSource="/PanoramaBackground.png"/>
-            </controls:Panorama.Background>
-
-            <!--Panorama item one-->
-            <controls:PanoramaItem>
-                <controls:PanoramaItem.Header>
+            <!--Pivot item one-->
+            <controls:PivotItem>
+                <controls:PivotItem.Header>
                     <StackPanel>
                         <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
                         <toolkit:PerformanceProgressBar IsIndeterminate="{Binding IsLoading, Mode=TwoWay}"  />
                     </StackPanel>
-                </controls:PanoramaItem.Header>
+                </controls:PivotItem.Header>
 
-                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" Foreground="White" ItemClicked="SessionList_ItemClicked">
+                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" Foreground="White" ItemClicked="SessionList_ItemClicked" >
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
@@ -119,40 +112,24 @@
                     </ig:XamList.ItemsTemplate>
                 </ig:XamList>
 
-            </controls:PanoramaItem>
+            </controls:PivotItem>
 
-            <!--Panorama item two-->
+            <!--Pivot item two-->
             <!--Use 'Orientation="Horizontal"' to enable a panel that lays out horizontally-->
-            <controls:PanoramaItem Header="speakers">
+            <controls:PivotItem Header="speakers">
                 <!--Double line list with image placeholder and text wrapping-->
-                <ListBox Name="SpeakerList" Margin="0,0,-12,0" ItemsSource="{Binding Speakers}" SelectionChanged="ListBox_SelectionChanged">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <toolkit:WrapPanel ItemWidth="200" ItemHeight="200"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid  Margin="0,0,0,17">
-                                <!--Replace rectangle with image-->
-                                <Rectangle Height="170" Width="170" Fill="{StaticResource PhoneAccentBrush}" ></Rectangle>
-                                <Image Height="165" Width="165" Stretch="UniformToFill" Source="{Binding PictureUrl}"   />
-                                <StackPanel Height="25" Width="165"  VerticalAlignment="Bottom"  Background="#AF000000" Margin="0,0,0,5">
-
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Height="165" VerticalAlignment="Bottom" Text="{Binding FirstName, ConverterParameter=l, Converter={StaticResource CaseConverter}}"  Style="{StaticResource PhoneTextSubtleStyle}" Foreground="White" Margin="6,0,6,0"/>
-                                        <TextBlock Height="165" VerticalAlignment="Bottom" Text="{Binding LastName, ConverterParameter=l, Converter={StaticResource CaseConverter}}"  Style="{StaticResource PhoneTextSubtleStyle}" Foreground="White" Margin="0"/>
-                                    </StackPanel>
-
-
-                                </StackPanel>
-
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </controls:PanoramaItem>
-            <controls:PanoramaItem Header="reminders" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
+                <ig:XamList Name="SpeakerList" Margin="0,0,-12,0" ItemsSource="{Binding Speakers}" ItemLayout="ThumbnailTitleAndDescription">
+                    <ig:XamList.ItemLayoutBindings>
+                        <ig:ItemLayoutBinding ItemLayoutProperty="Title"
+                                          Path="SurnameFirstname" />
+                        <ig:ItemLayoutBinding ItemLayoutProperty="Description"
+                                          Path="Twitter" />
+                        <ig:ItemLayoutBinding ItemLayoutProperty="ThumbnailSource"
+                                          Path="ImageResourcePath" />
+                    </ig:XamList.ItemLayoutBindings>
+                </ig:XamList>
+            </controls:PivotItem>
+            <controls:PivotItem Header="reminders" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
                 <ListBox Margin="0,0,-12,0" ItemsSource="{Binding SavedSessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SavedSessionList">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -175,14 +152,14 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-            </controls:PanoramaItem>
+            </controls:PivotItem>
 
-            <controls:PanoramaItem >
-                <controls:PanoramaItem.Header>
+            <controls:PivotItem >
+                <controls:PivotItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="schedule" Margin="0,0,24,0"></TextBlock>
                     </StackPanel>
-                </controls:PanoramaItem.Header>
+                </controls:PivotItem.Header>
 
                 <ig:XamList ItemsSource="{Binding Sessions}" IsSearchingEnabled="False" ItemClicked="XamList_ItemClicked">
                     <ig:XamList.Grouping>
@@ -219,9 +196,9 @@
 
 
 
-            </controls:PanoramaItem>
+            </controls:PivotItem>
 
-            <controls:PanoramaItem Header="information">
+            <controls:PivotItem Header="information">
                 <Grid Margin="12,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.5*"/>
@@ -261,8 +238,8 @@
 
                 </Grid>
                 <!--Double line list with image placeholder and text wrapping-->
-            </controls:PanoramaItem>
-        </controls:Panorama>
+            </controls:PivotItem>
+        </controls:Pivot>
     </Grid>
 
 </phone:PhoneApplicationPage>

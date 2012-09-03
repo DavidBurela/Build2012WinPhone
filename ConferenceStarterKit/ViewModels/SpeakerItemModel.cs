@@ -58,6 +58,8 @@ namespace ConferenceStarterKit.ViewModels
                 NotifyPropertyChanged("LastName");
             }
         }
+
+        public string SurnameFirstname { get { return string.Concat(LastName, ", ", FirstName); }}
         public string Bio
         {
             get { return _bio; }

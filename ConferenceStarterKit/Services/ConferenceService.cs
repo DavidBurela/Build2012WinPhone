@@ -57,13 +57,10 @@ namespace ConferenceStarterKit.Services
                 {
                     var converted = (IsolatedStorageSettings.ApplicationSettings["SessionData"] as IEnumerable<SessionItemModel>);
 
-                    System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
-                    {
-                        SessionList = converted.ToObservableCollection(SessionList);
-                        SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().ToObservableCollection(SpeakerList);
-                        var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
-                        OnDataLoaded(loadedEventArgs);
-                    });
+                    SessionList = converted.ToObservableCollection(SessionList);
+                    SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().ToObservableCollection(SpeakerList);
+                    var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
+                    OnDataLoaded(loadedEventArgs);
                 }
             }
             else
