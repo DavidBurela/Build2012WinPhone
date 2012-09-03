@@ -166,7 +166,7 @@ namespace ConferenceStarterKit
                                         orderby session.Key ascending
                                         select new Group<SessionItemModel>(session.Key, session);
 
-                SessionByTime.ItemsSource = sessionByTimeSlot;
+                //SessionByTime.ItemsSource = sessionByTimeSlot;
                 _temp++;
             }
 
@@ -248,18 +248,18 @@ namespace ConferenceStarterKit
             }
         }
 
-        private void ScheduleTap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            App.CurrentSession = (SessionItemModel)SessionByTime.SelectedItem;
-            NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
-        }
-
         private void SessionList_ItemClicked(object sender, Infragistics.Controls.Grids.ListItemEventArgs e)
         {
-            var xamList = (Infragistics.Controls.Grids.XamList)sender;
             App.CurrentSession = e.Item.Data as SessionItemModel;
             if (App.CurrentSession != null)
                 //App.CurrentSession = (SessionItemModel)lb.SelectedItem;
+                NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
+        }
+
+        private void XamList_ItemClicked(object sender, Infragistics.Controls.Grids.ListItemEventArgs e)
+        {
+            App.CurrentSession = e.Item.Data as SessionItemModel;
+            if (App.CurrentSession != null)
                 NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
         }
     }

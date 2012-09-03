@@ -23,31 +23,6 @@
         <ETE_Converters:CaseConverter x:Key="CaseConverter"/>
         <ETE_ViewModels:MainViewModel x:Key="MainViewModelDataSource" d:IsDataSource="True"/>
 
-        <!--DATA TEMPLATES-->
-        <DataTemplate x:Key="SessionItemTemplate">
-
-            <StackPanel Margin="0,0,0,17" Tap="ScheduleTap">
-                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
-                <StackPanel Orientation="Horizontal">
-
-                    <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
-	                    <TextBlock.Foreground>
-	                        <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-	                    </TextBlock.Foreground>
-                    </TextBlock>
-                    <TextBlock Text="{Binding Location}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
-	                    <TextBlock.Foreground>
-	                        <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-	                    </TextBlock.Foreground>
-                    </TextBlock>
-                </StackPanel>
-
-            </StackPanel>
-
-        </DataTemplate>
-
-
-
         <!-- The group header template, for groups in the main list -->
         <DataTemplate x:Key="SessionGroupHeader">
             <Border Background="{StaticResource PhoneAccentBrush}"
@@ -122,18 +97,8 @@
             <controls:PanoramaItem>
                 <controls:PanoramaItem.Header>
                     <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
-                            <!--<Button Margin="0,0,-26,-24" Click="Filter_Click" BorderThickness="0" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" >
-                            <Image Source="/Images/appbar.magnify.png" ></Image>
-                        </Button>-->
-                            <!--<Button Margin="0,0,0,-24" Click="CloseFilter_Click" BorderThickness="0" Visibility="{Binding Filter, Converter={StaticResource StringVisibilityConverter}, Mode=TwoWay}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" >
-                            <Image Source="/Images/appbar.close.png" ></Image>
-                        </Button>-->
-
-                        </StackPanel>
+                        <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
                         <toolkit:PerformanceProgressBar IsIndeterminate="{Binding IsLoading, Mode=TwoWay}"  />
-
                     </StackPanel>
                 </controls:PanoramaItem.Header>
 
@@ -141,8 +106,9 @@
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
-                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
-                                <TextBlock Text="{Binding Code}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" Foreground="White"/>
+                                <!--<TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding Code}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" Foreground="White"/>-->
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
                                 <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
                                 	<TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
@@ -152,21 +118,6 @@
                         </DataTemplate>
                     </ig:XamList.ItemsTemplate>
                 </ig:XamList>
-                <!--<ListBox Margin="0,0,-12,0" ItemsSource="{Binding Sessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SessionList" Foreground="White">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,17" >                                
-                                <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
-                                <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
-                                	<TextBlock.Foreground>
-                                		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-                                	</TextBlock.Foreground>
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>-->
-
 
             </controls:PanoramaItem>
 
@@ -230,18 +181,32 @@
                 <controls:PanoramaItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="schedule" Margin="0,0,24,0"></TextBlock>
-                        <!--<Button>
-                            <Image Source="/Images/up.png" Margin="0,0,24,-24"></Image>
-                        </Button>
-                        <Button>
-                            <Image Source="/Images/down.png" Margin="0,0,0,-24"></Image>
-                        </Button>-->
                     </StackPanel>
                 </controls:PanoramaItem.Header>
 
+                <ig:XamList ItemsSource="{Binding Sessions}" IsSearchingEnabled="False" ItemClicked="XamList_ItemClicked">
+                    <ig:XamList.Grouping>
+                        <ig:ValueGrouping GroupByMemberPath="Date" />
+                    </ig:XamList.Grouping>
+
+                    <ig:XamList.ItemsTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,17" >
+                                <!--<TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding Code}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" Foreground="White"/>-->
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding Location}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" >
+                                    <TextBlock.Foreground>
+                                		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                                	</TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ig:XamList.ItemsTemplate>
+                </ig:XamList>
 
 
-                <toolkit:LongListSelector x:Name="SessionByTime" IsFlatList="False"  Background="Transparent" 
+                <!--<toolkit:LongListSelector x:Name="SessionByTime" IsFlatList="False"  Background="Transparent" 
                                           
                                           GroupHeaderTemplate="{StaticResource SessionGroupHeader}"
                                           GroupItemTemplate="{StaticResource GroupItemHeader}"
@@ -250,7 +215,7 @@
                                           GroupViewClosing="LongListSelector_GroupViewClosing">
 
 
-                </toolkit:LongListSelector>
+                </toolkit:LongListSelector>-->
 
 
 

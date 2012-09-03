@@ -74,8 +74,10 @@ namespace ConferenceStarterKit
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             //get state from iso
-            IsolatedStorageSettings.ApplicationSettings.TryGetValue<ObservableCollection<SessionItemModel>>("SavedSessions", out SavedSessions);
- 
+            IEnumerable<SessionItemModel> savedSessionsListFromIsoStorage = null;
+            IsolatedStorageSettings.ApplicationSettings.TryGetValue<IEnumerable<SessionItemModel>>("SavedSessions", out savedSessionsListFromIsoStorage);
+            if (savedSessionsListFromIsoStorage != null)
+                SavedSessions = savedSessionsListFromIsoStorage.ToObservableCollection();
         }
 
 
@@ -95,7 +97,10 @@ namespace ConferenceStarterKit
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
-            IsolatedStorageSettings.ApplicationSettings["SavedSessions"] =  SavedSessions;
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("SavedSessions"))
+                IsolatedStorageSettings.ApplicationSettings.Remove("SavedSessions");
+
+            IsolatedStorageSettings.ApplicationSettings["SavedSessions"] =  SavedSessions.ToList();
             IsolatedStorageSettings.ApplicationSettings.Save();
         }
 

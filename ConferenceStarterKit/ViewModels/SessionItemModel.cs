@@ -133,6 +133,8 @@ namespace ConferenceStarterKit.ViewModels
                 NotifyPropertyChanged("Track");
             }
         }
+
+        public string CodeAndTitle { get { return String.Concat(Code, " - ", Title); }}
         public ObservableCollection<SpeakerItemModel> Speakers{get;set;}
             
         }
