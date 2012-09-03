@@ -127,7 +127,7 @@ namespace ConferenceStarterKit.Services
                     System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
                         SessionList = converted.ToObservableCollection(SessionList);
-                        SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().ToObservableCollection(SpeakerList);
+                        SpeakerList = SessionList.SelectMany(p => p.Speakers).OrderBy(p => p.SurnameFirstname).Distinct().ToObservableCollection(SpeakerList);
                         var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
                         OnDataLoaded(loadedEventArgs);
                     });
