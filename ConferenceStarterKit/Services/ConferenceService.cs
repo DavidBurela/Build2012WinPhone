@@ -41,7 +41,19 @@ namespace ConferenceStarterKit.Services
             SpeakerList = new ObservableCollection<SpeakerItemModel>();
             DateTime sessionLastDownload = DateTime.MinValue;
 
-            // Session data
+
+            // Get the data from Isolated storage if it is there
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
+            {
+                var converted = (IsolatedStorageSettings.ApplicationSettings["SessionData"] as IEnumerable<SessionItemModel>);
+
+                SessionList = converted.ToObservableCollection(SessionList);
+                SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
+                var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
+                OnDataLoaded(loadedEventArgs);
+            }
+
+
             // Get the last time the data was downloaded.
             if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
             {
@@ -50,24 +62,11 @@ namespace ConferenceStarterKit.Services
 
             // Check if we need to download the latest data, or if we can just use the isolated storage data
             // Cache the data for 2 hours
-            if ((sessionLastDownload.AddHours(2) >= DateTime.Now) && IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
-            {
-                // Get the data from Isolated storage
-                if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
-                {
-                    var converted = (IsolatedStorageSettings.ApplicationSettings["SessionData"] as IEnumerable<SessionItemModel>);
-
-                    SessionList = converted.ToObservableCollection(SessionList);
-                    SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
-                    var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
-                    OnDataLoaded(loadedEventArgs);
-                }
-            }
-            else
+            if ((sessionLastDownload.AddHours(2) < DateTime.Now) || !IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
             {
                 // Download the data
                 var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(Settings.SessionServiceUri));
-                var sessionsQuery = from s in techEdService.Sessions//.Take(20)
+                var sessionsQuery = from s in techEdService.Sessions //.Take(20)
                                     select new SessionTemp
                                                {
                                                    SessionId = s.SessionID,
@@ -120,17 +119,19 @@ namespace ConferenceStarterKit.Services
                                                     Location = s.Room,
                                                     Id = s.SessionId,
                                                     Date = (DateTime)s.StartTime,
-                                                    Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last, PictureUrl = p.SmallImage}).ToObservableCollection()
+                                                    Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last, PictureUrl = p.SmallImage }).ToObservableCollection()
                                                 }).ToList();
 
-                    // Update the SessionList collection. Then mark everything as loaded
-                    System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
-                    {
-                        SessionList = converted.ToObservableCollection(SessionList);
-                        SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
-                        var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
-                        OnDataLoaded(loadedEventArgs);
-                    });
+                    // Display the data on the screen ONLY if we didn't already load from the cache
+                    // Don't bother about rebinding everything, just wait until the user launches the next time.
+                    if (SessionList.Count < 1)
+                        System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            SessionList = converted.ToObservableCollection(SessionList);
+                            SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
+                            var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
+                            OnDataLoaded(loadedEventArgs);
+                        });
 
 
                     // Save the results into the cache.
