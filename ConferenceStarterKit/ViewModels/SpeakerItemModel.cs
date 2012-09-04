@@ -20,7 +20,7 @@ namespace ConferenceStarterKit.ViewModels
         private string _lastname;
         private string _bio;
         private string _position;
-        private string _pictureurl;
+        private string _pictureurl = @"/Images/missingprofile.png";
         private string _twitter;
 
         public ObservableCollection<SessionItemModel> Sessions { get; set; }
@@ -97,6 +97,8 @@ namespace ConferenceStarterKit.ViewModels
                 if (value != _pictureurl)
                 {
                     _pictureurl = value;
+                    if (string.IsNullOrEmpty(_pictureurl) || _pictureurl == "0")
+                        _pictureurl = @"/Images/missingprofile.png";
                     NotifyPropertyChanged("PictureUrl");
                 }
             }

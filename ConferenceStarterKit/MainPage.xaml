@@ -160,7 +160,7 @@
                     <ig:XamList.ItemLayoutBindings>
                         <ig:ItemLayoutBinding ItemLayoutProperty="Title" Path="SurnameFirstname" />
                         <ig:ItemLayoutBinding ItemLayoutProperty="Description" Path="Twitter" />
-                        <ig:ItemLayoutBinding ItemLayoutProperty="ThumbnailSource" Path="ImageResourcePath" />
+                        <ig:ItemLayoutBinding ItemLayoutProperty="ThumbnailSource" Path="PictureUrl" />
                     </ig:XamList.ItemLayoutBindings>
                 </ig:XamList>
             </controls:PivotItem>

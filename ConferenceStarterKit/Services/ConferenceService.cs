@@ -120,7 +120,7 @@ namespace ConferenceStarterKit.Services
                                                     Location = s.Room,
                                                     Id = s.SessionId,
                                                     Date = (DateTime)s.StartTime,
-                                                    Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last }).ToObservableCollection()
+                                                    Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last, PictureUrl = p.SmallImage}).ToObservableCollection()
                                                 }).ToList();
 
                     // Update the SessionList collection. Then mark everything as loaded
