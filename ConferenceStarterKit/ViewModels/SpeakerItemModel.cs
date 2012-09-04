@@ -23,7 +23,7 @@ namespace ConferenceStarterKit.ViewModels
         private string _pictureurl;
         private string _twitter;
 
-        public ObservableCollection<SessionItemModel> Sessions { get; private set; }
+        public ObservableCollection<SessionItemModel> Sessions { get; set; }
 
         public int Id
         {

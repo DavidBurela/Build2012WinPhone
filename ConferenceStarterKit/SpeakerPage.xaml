@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:ETE_Converters="clr-namespace:ConferenceStarterKit.Converters" xmlns:ETE_ViewModels="clr-namespace:ConferenceStarterKit.ViewModels" 
-    xmlns:local="clr-namespace:ConferenceStarterKit" 
+    xmlns:local="clr-namespace:ConferenceStarterKit"
+    xmlns:ig="clr-namespace:Infragistics.Controls.Grids;assembly=InfragisticsWP7.Controls.Grids.XamList.v12.1"
     x:Class="ConferenceStarterKit.SpeakerPage" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     SupportedOrientations="Portrait"  Orientation="Portrait"
@@ -48,7 +49,27 @@
     			<local:SpeakerBioUserControl DataContext="{Binding Speaker}" Margin="12,0,0,0"/>
     		</controls:PivotItem>
 
+            <controls:PivotItem>
+                <controls:PivotItem.Header>
+                        <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
+                </controls:PivotItem.Header>
 
+                <ig:XamList IsSearchingEnabled="False" ItemsSource="{Binding Speaker.Sessions}" Foreground="White" ItemClicked="SessionList_ItemClicked" >
+                    <ig:XamList.ItemsTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,17" >
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
+                                	<TextBlock.Foreground>
+                                		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                                	</TextBlock.Foreground>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ig:XamList.ItemsTemplate>
+                </ig:XamList>
+
+            </controls:PivotItem>
 
     		<controls:PivotItem Header="twitter">
                 <Grid>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,6 +47,7 @@ namespace ConferenceStarterKit.ViewModels
         public void LoadData()
         {
             Speaker = App.CurrentSpeaker;
+            Speaker.Sessions = App.Sessions.Where(p => p.Speakers.Contains(Speaker)).ToObservableCollection();
             Twitter = Service.GetTwitterFeed(Speaker.Twitter);
         }   
     }
