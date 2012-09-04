@@ -67,6 +67,7 @@
       - Search through session code, title &amp; abstract to find exactly what you are looking for!
       - Sessions by timeslot, easily discover which sessions are on right now
       - Save sessions to favourites
+      - Sessions cached for 2 hours to reduce network bandwidth
     </Item>
   </Items>
 </About>

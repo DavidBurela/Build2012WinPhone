@@ -77,7 +77,7 @@ namespace ConferenceStarterKit
             IEnumerable<SessionItemModel> savedSessionsListFromIsoStorage = null;
             IsolatedStorageSettings.ApplicationSettings.TryGetValue<IEnumerable<SessionItemModel>>("SavedSessions", out savedSessionsListFromIsoStorage);
             if (savedSessionsListFromIsoStorage != null)
-                SavedSessions = savedSessionsListFromIsoStorage.ToObservableCollection();
+                SavedSessions = savedSessionsListFromIsoStorage.OrderBy(p => p.Date).ToObservableCollection();
         }
 
 
@@ -89,7 +89,7 @@ namespace ConferenceStarterKit
             {
                 //get state from iso
                 IsolatedStorageSettings.ApplicationSettings.TryGetValue<ObservableCollection<SessionItemModel>>("SavedSessions", out SavedSessions);
-            
+
             }
         }
 
@@ -97,10 +97,15 @@ namespace ConferenceStarterKit
         // This code will not execute when the application is closing
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            SaveAppSettings();
+        }
+
+        private static void SaveAppSettings()
+        {
             if (IsolatedStorageSettings.ApplicationSettings.Contains("SavedSessions"))
                 IsolatedStorageSettings.ApplicationSettings.Remove("SavedSessions");
 
-            IsolatedStorageSettings.ApplicationSettings["SavedSessions"] =  SavedSessions.ToList();
+            IsolatedStorageSettings.ApplicationSettings["SavedSessions"] = SavedSessions.ToList();
             IsolatedStorageSettings.ApplicationSettings.Save();
         }
 
@@ -108,6 +113,7 @@ namespace ConferenceStarterKit
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            SaveAppSettings();
         }
 
         // Code to execute if a navigation fails

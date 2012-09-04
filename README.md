@@ -4,6 +4,7 @@ Microsoft TechEd Australia - Windows Phone 7 app
 A companion application for attendees of Microsoft TechEd Australia in 2012.  It is based on the "Starter kit for conferences"  [http://smallandmighty.net/blog/windows-phone-starter-kit-for-conferences](http://smallandmighty.net/blog/windows-phone-starter-kit-for-conferences)
 
 The application was simplified greatly by replacing the custom logic for grouping and sorting, and instead replacing it with the [NetAdvantage controls for Windows Phone](http://www.infragistics.com/products/windows-phone) which support this functionality directly. This also sped up the loading and scrolling of the list dramatically.
+I also added functionality to cache the OData results for 2 hours.
 
 Features
 -------
@@ -11,6 +12,7 @@ Features
 * Search through session code, title &amp; abstract to find exactly what you are looking for!
 * Sessions by timeslot, easily discover which sessions are on right now
 * Save sessions to favourites
+* Sessions cached for 2 hours to reduce network bandwidth
 
 Downloading
 --------
