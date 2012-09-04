@@ -24,12 +24,6 @@ namespace ConferenceStarterKit
 
         }
 
-        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            //App.CurrentSpeaker = (SpeakerItemModel)SpeakerList.SelectedItem;
-            NavigationService.Navigate(new System.Uri("/SpeakerPage.xaml", System.UriKind.Relative));
-        }
-
         private void SessionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ListBox lb = (ListBox)sender;
@@ -77,20 +71,19 @@ namespace ConferenceStarterKit
         {
             App.CurrentSession = e.Item.Data as SessionItemModel;
             if (App.CurrentSession != null)
-                //App.CurrentSession = (SessionItemModel)lb.SelectedItem;
-                NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
-        }
-
-        private void XamList_ItemClicked(object sender, Infragistics.Controls.Grids.ListItemEventArgs e)
-        {
-            App.CurrentSession = e.Item.Data as SessionItemModel;
-            if (App.CurrentSession != null)
                 NavigationService.Navigate(new System.Uri("/SessionPage.xaml", System.UriKind.Relative));
         }
 
         private void ApplicationBarAbout_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/YourLastAboutDialog;component/AboutPage.xaml", UriKind.Relative));
+        }
+
+        private void SpeakerList_ItemClicked(object sender, Infragistics.Controls.Grids.ListItemEventArgs e)
+        {
+            App.CurrentSpeaker = e.Item.Data as SpeakerItemModel;
+            if (App.CurrentSpeaker != null)
+                NavigationService.Navigate(new System.Uri("/SpeakerPage.xaml", System.UriKind.Relative));
         }
     }
 }

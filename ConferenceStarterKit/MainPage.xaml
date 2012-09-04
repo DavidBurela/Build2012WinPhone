@@ -114,7 +114,7 @@
                     </StackPanel>
                 </controls:PivotItem.Header>
 
-                <ig:XamList ItemsSource="{Binding Sessions}" IsSearchingEnabled="False" ItemClicked="XamList_ItemClicked">
+                <ig:XamList ItemsSource="{Binding Sessions}" IsSearchingEnabled="False" ItemClicked="SessionList_ItemClicked">
                     <ig:XamList.Grouping>
                         <ig:ValueGrouping GroupByMemberPath="Date" />
                     </ig:XamList.Grouping>
@@ -136,34 +136,27 @@
 
             <!--Favourites-->
             <controls:PivotItem Header="favourites" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
-                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding SavedSessions}" SelectionChanged="SessionListBox_SelectionChanged" Name="SavedSessionList">
-                    <ListBox.ItemTemplate>
+                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding SavedSessions}" Name="SavedSessionList" Foreground="White" ItemClicked="SessionList_ItemClicked" >
+                    <ig:XamList.ItemsTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <toolkit:ContextMenuService.ContextMenu >
-                                    <toolkit:ContextMenu  ItemsSource="{Binding}"  HorizontalAlignment="Left" Margin="0,0,0,0" Name="contextMenu1" VerticalAlignment="Center"  Width="150" Height="100" >
-                                        <toolkit:MenuItem  CommandParameter="{Binding Title}" Header="Remove from Reminders" Click="MenuItem_Click" Tag="DELETE" VerticalAlignment="Center" Width="400" Height="75"/>
-                                    </toolkit:ContextMenu>
-                                </toolkit:ContextMenuService.ContextMenu>
-                                <StackPanel Margin="0,0,0,17" >
-                                    <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
-                                    <TextBlock Text="{Binding Date}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSubtleStyle}" >
+                            <StackPanel Margin="0,0,0,17" >
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
                                 	<TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                                 	</TextBlock.Foreground>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
+                                </TextBlock>
+                            </StackPanel>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </ig:XamList.ItemsTemplate>
+                </ig:XamList>
 
             </controls:PivotItem>
 
             <!--Speakers-->
             <controls:PivotItem Header="speakers">
                 <!--Double line list with image placeholder and text wrapping-->
-                <ig:XamList Name="SpeakerList" Margin="0,0,-12,0" ItemsSource="{Binding Speakers}" ItemLayout="ThumbnailTitleAndDescription">
+                <ig:XamList Name="SpeakerList" Margin="0,0,-12,0" ItemsSource="{Binding Speakers}" ItemLayout="ThumbnailTitleAndDescription" ItemClicked="SpeakerList_ItemClicked">
                     <ig:XamList.ItemLayoutBindings>
                         <ig:ItemLayoutBinding ItemLayoutProperty="Title" Path="SurnameFirstname" />
                         <ig:ItemLayoutBinding ItemLayoutProperty="Description" Path="Twitter" />

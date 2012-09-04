@@ -112,6 +112,9 @@ namespace ConferenceStarterKit.ViewModels
                 if (value != _twitter)
                 {
                     _twitter = value;
+
+                    if (_twitter != null && _twitter.Contains("@") == false)
+                        _twitter = "@" + _twitter;
                     NotifyPropertyChanged("Twitter");
                 }
             }
