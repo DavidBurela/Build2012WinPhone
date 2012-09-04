@@ -14,13 +14,14 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
-	<phone:PhoneApplicationPage.Resources>
-		<ETE_Converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
-		<ETE_Converters:CaseConverter x:Key="CaseConverter"/>
-		<ETE_ViewModels:SpeakerViewModel x:Key="SpeakerViewModelDataSource" d:IsDataSource="True"/>
-	</phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.Resources>
+        <ETE_Converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+        <ETE_Converters:CaseConverter x:Key="CaseConverter"/>
+        <ETE_ViewModels:SpeakerViewModel x:Key="SpeakerViewModelDataSource" d:IsDataSource="True"/>
+    </phone:PhoneApplicationPage.Resources>
 
-    <!--Sample code showing usage of ApplicationBar--><!--<phone:PhoneApplicationPage.ApplicationBar>
+    <!--Sample code showing usage of ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"/>
             <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"/>
@@ -30,28 +31,28 @@
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>-->
-    
-	<phone:PhoneApplicationPage.FontFamily>
-		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
-	</phone:PhoneApplicationPage.FontFamily>
-	<phone:PhoneApplicationPage.FontSize>
-		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
-	</phone:PhoneApplicationPage.FontSize>
-	<phone:PhoneApplicationPage.Foreground>
-		<StaticResource ResourceKey="PhoneForegroundBrush"/>
-	</phone:PhoneApplicationPage.Foreground>
+
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush"/>
+    </phone:PhoneApplicationPage.Foreground>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{Binding Source={StaticResource SpeakerViewModelDataSource}}">
-    	<controls:Pivot Title="{Binding ApplicationName, ConverterParameter=u, Converter={StaticResource CaseConverter}, Mode=OneWay}" DataContext="{Binding}">
-    		<!--Pivot item one-->
-    		<controls:PivotItem Header="bio" >
-    			<local:SpeakerBioUserControl DataContext="{Binding Speaker}" Margin="12,0,0,0"/>
-    		</controls:PivotItem>
+        <controls:Pivot Title="{Binding ApplicationName, ConverterParameter=u, Converter={StaticResource CaseConverter}, Mode=OneWay}" DataContext="{Binding}">
+            <!--Pivot item one-->
+            <controls:PivotItem Header="bio" >
+                <local:SpeakerBioUserControl DataContext="{Binding Speaker}" Margin="12,0,0,0"/>
+            </controls:PivotItem>
 
             <controls:PivotItem>
                 <controls:PivotItem.Header>
-                        <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
+                    <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
                 </controls:PivotItem.Header>
 
                 <ig:XamList IsSearchingEnabled="False" ItemsSource="{Binding Speaker.Sessions}" Foreground="White" ItemClicked="SessionList_ItemClicked" >
@@ -71,21 +72,22 @@
 
             </controls:PivotItem>
 
-    		<controls:PivotItem Header="twitter">
+            <controls:PivotItem Header="twitter">
                 <Grid>
-                <ListBox  x:Name="TwitterListBox" Margin="0" ItemsSource="{Binding Twitter}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,17"  Background="#AF000000"  Width="445">
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Text}" Margin="12,0,0,5" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
-                                <TextBlock Text="{Binding Date}" TextWrapping="NoWrap" Margin="12,-6,0,0" Style="{StaticResource PhoneTextAccentStyle}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                    </Grid>
+                    <TextBlock x:Name="noTwitterTextBlock" Visibility="Collapsed" Style="{StaticResource PhoneTextTitle3Style}" Text="Speaker has not submitted a twitter handle" TextWrapping="Wrap" />
+                    <ListBox  x:Name="TwitterListBox" Margin="0" ItemsSource="{Binding Twitter}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,17"  Background="#AF000000"  Width="445">
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding Text}" Margin="12,0,0,5" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
+                                    <TextBlock Text="{Binding Date}" TextWrapping="NoWrap" Margin="12,-6,0,0" Style="{StaticResource PhoneTextAccentStyle}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
-    	</controls:Pivot>
+        </controls:Pivot>
     </Grid>
-    
+
 </phone:PhoneApplicationPage>
