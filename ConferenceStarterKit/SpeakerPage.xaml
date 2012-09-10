@@ -55,11 +55,11 @@
                     <TextBlock Text="sessions" Margin="0,0,5,0"></TextBlock>
                 </controls:PivotItem.Header>
 
-                <ig:XamList IsSearchingEnabled="False" ItemsSource="{Binding Speaker.Sessions}" Foreground="White" ItemClicked="SessionList_ItemClicked" >
+                <ig:XamList IsSearchingEnabled="False" ItemsSource="{Binding Speaker.Sessions}" ItemClicked="SessionList_ItemClicked" >
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
-                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />
                                 <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
                                 	<TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
@@ -79,7 +79,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,0,0,17"  Background="#AF000000"  Width="445">
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding Text}" Margin="12,0,0,5" Style="{StaticResource PhoneTextTitle3Style}" Foreground="White"/>
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding Text}" Margin="12,0,0,5" Style="{StaticResource PhoneTextTitle3Style}" />
                                     <TextBlock Text="{Binding Date}" TextWrapping="NoWrap" Margin="12,-6,0,0" Style="{StaticResource PhoneTextAccentStyle}"/>
                                 </StackPanel>
                             </DataTemplate>

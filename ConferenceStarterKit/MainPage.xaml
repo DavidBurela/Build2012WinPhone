@@ -75,7 +75,7 @@
 
         <!--Pivot control-->
         <!--Title="{Binding ApplicationName, ConverterParameter=l, Converter={StaticResource CaseConverter}, Mode=OneWay}"-->
-        <controls:Pivot Foreground="White" >
+        <controls:Pivot >
             <controls:Pivot.Title>
                 <Image Source="/Images/techedheader.png" Height="100" HorizontalAlignment="Left" ></Image>
             </controls:Pivot.Title>
@@ -89,11 +89,11 @@
                     </StackPanel>
                 </controls:PivotItem.Header>
 
-                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" Foreground="White" ItemClicked="SessionList_ItemClicked" >
+                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" ItemClicked="SessionList_ItemClicked" >
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
-                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />
                                 <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
                                 	<TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
@@ -122,7 +122,7 @@
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
-                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />
                                 <TextBlock Text="{Binding Location}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" >
                                     <TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
@@ -136,11 +136,11 @@
 
             <!--Favourites-->
             <controls:PivotItem Header="favourites" Visibility="{Binding SavedSessions.Count, Converter={StaticResource CountVisibilityConverter}}" >
-                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding SavedSessions}" Name="SavedSessionList" Foreground="White" ItemClicked="SessionList_ItemClicked" >
+                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding SavedSessions}" Name="SavedSessionList" ItemClicked="SessionList_ItemClicked" >
                     <ig:XamList.ItemsTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,17" >
-                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Foreground="White"/>
+                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />
                                 <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
                                 	<TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
