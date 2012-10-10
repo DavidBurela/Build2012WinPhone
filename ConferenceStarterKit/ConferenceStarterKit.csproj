@@ -70,6 +70,9 @@
     <Reference Include="RestSharp.WindowsPhone">
       <HintPath>Dependencies\RestSharp.WindowsPhone.dll</HintPath>
     </Reference>
+    <Reference Include="SharpGIS.GZipWebClient">
+      <HintPath>..\Libs\SharpGIS.GZipWebClient.dll</HintPath>
+    </Reference>
     <Reference Include="system.data.linq" />
     <Reference Include="System.Data.Services.Client, Version=7.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -102,11 +105,6 @@
     </Compile>
     <Compile Include="Information.xaml.cs">
       <DependentUpon>Information.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\TechEdServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
     <Compile Include="Services\LoadEventArgs.cs" />
     <Compile Include="Sponsors.xaml.cs">
@@ -206,7 +204,6 @@
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\DataSources\ConferenceStarterKit.TechEdServiceReference.ODataTEEntities.datasource" />
     <None Include="Properties\WMAppManifest.xml" />
-    <None Include="Service References\TechEdServiceReference\service.edmx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
@@ -238,19 +235,10 @@
     <Content Include="Images\down.png" />
     <Content Include="Images\pinchtz.png" />
     <Content Include="Images\up.png" />
-    <None Include="Service References\TechEdServiceReference\Reference.datasvcmap">
-      <Generator>DataServiceClientGenerator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ServiceReferenceMetadataStorage Include="Service References\TechEdServiceReference\">
-      <Type>datasvcmap</Type>
-    </ServiceReferenceMetadataStorage>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

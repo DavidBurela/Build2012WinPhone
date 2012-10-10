@@ -65,61 +65,75 @@ namespace ConferenceStarterKit.Services
             if ((sessionLastDownload.AddHours(2) < DateTime.Now) || !IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
             {
                 // Download the data
-                var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(Settings.SessionServiceUri));
-                var sessionsQuery = from s in techEdService.Sessions //.Take(20)
-                                    select new SessionTemp
-                                               {
-                                                   SessionId = s.SessionID,
-                                                   Code = s.Code,
-                                                   Title = s.Title,
-                                                   Description = s.Abstract,
-                                                   Room = s.Room,
-                                                   StartTime = s.StartTime,
-                                                   Speakers = s.Speakers.Select(p => new SpeakerTemp { SpeakerId = p.SpeakerID, First = p.SpeakerFirstName, Last = p.SpeakerLastName, Twitter = p.Twitter, SmallImage = p.SmallImage })
-                                               };
-
-                ((DataServiceQuery)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);
+                var webClient = new SharpGIS.GZipWebClient();
+                webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
+                webClient.DownloadStringAsync(new Uri(@"http://channel9.msdn.com/events/build/build2011/sessions"));
+                
+                //var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(Settings.SessionServiceUri));
+                //var sessionsQuery = from s in techEdService.Sessions //.Take(20)
+                //                    select new SessionTemp
+                //                               {
+                //                                   SessionId = s.SessionID,
+                //                                   Code = s.Code,
+                //                                   Title = s.Title,
+                //                                   Description = s.Abstract,
+                //                                   Room = s.Room,
+                //                                   StartTime = s.StartTime,
+                //                                   Speakers = s.Speakers.Select(p => new SpeakerTemp { SpeakerId = p.SpeakerID, First = p.SpeakerFirstName, Last = p.SpeakerLastName, Twitter = p.Twitter, SmallImage = p.SmallImage })
+                //                               };
+                //((DataServiceQuery)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);
             }
         }
 
-        class SessionTemp
+
+        public class SessionsResponse
         {
-            public int SessionId { get; set; }
-            public string Code { get; set; }
+            public string Id { get; set; }
+            public string Starts { get; set; }
+            public string Finish { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
+            public List<string> SpeakerIds { get; set; }
+            public string Link { get; set; }
+            public string Slides { get; set; }
+            public List<string> Tags { get; set; }
+            public string Code { get; set; }
+            public object Level { get; set; }
+            public string MediaDuration { get; set; }
+            public bool IsKeyNote { get; set; }
+            public bool Prerecorded { get; set; }
+            public bool Notrecorded { get; set; }
+            public string Previewimage { get; set; }
+            public string Thumbnailimage { get; set; }
+            public string Video { get; set; }
+            public string Mp4med { get; set; }
+            public string Mp4high { get; set; }
+            public string Mp4low { get; set; }
+            public string Wmvhq { get; set; }
+            public string Wmv { get; set; }
+            public string Smooth { get; set; }
             public string Room { get; set; }
-            public DateTime? StartTime { get; set; }
-            public IEnumerable<SpeakerTemp> Speakers { get; set; }
         }
-        class SpeakerTemp
-        {
-            public int SpeakerId { get; set; }
-            public string First { get; set; }
-            public string Last { get; set; }
-            public string Twitter { get; set; }
-            public string SmallImage { get; set; }
-        }
-        private void OnCustomerOrdersQueryComplete(IAsyncResult result)
+
+        void webClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                var svcContext = result.AsyncState as DataServiceQuery;
-                if (svcContext != null)
-                {
-                    var sessionData = svcContext.EndExecute(result);
 
-                    var converted = (from s in ((IEnumerable<SessionTemp>)sessionData)
+                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SessionsResponse>>(e.Result);
+                {
+                    DateTime tempTime;
+                    var converted = (from s in deserialized
                                      orderby s.Code
                                      select new SessionItemModel
                                                 {
+                                                    //Id = s.Id,
                                                     Code = s.Code,
                                                     Title = s.Title,
                                                     Description = StripHtmlTags(s.Description),
                                                     Location = s.Room,
-                                                    Id = s.SessionId,
-                                                    Date = (DateTime)s.StartTime,
-                                                    Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last, PictureUrl = p.SmallImage }).ToObservableCollection()
+                                                    Date = (DateTime.TryParse(s.Starts, out tempTime) ? DateTime.Parse(s.Starts) : DateTime.MinValue ) ,
+                                                    //Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last, PictureUrl = p.SmallImage }).ToObservableCollection()
                                                 }).ToList();
 
                     // Display the data on the screen ONLY if we didn't already load from the cache
@@ -128,7 +142,7 @@ namespace ConferenceStarterKit.Services
                         System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
                             SessionList = converted.ToObservableCollection(SessionList);
-                            SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
+                            //SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
                             var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
                             OnDataLoaded(loadedEventArgs);
                         });
