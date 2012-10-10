@@ -68,20 +68,6 @@ namespace ConferenceStarterKit.Services
                 var webClient = new SharpGIS.GZipWebClient();
                 webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
                 webClient.DownloadStringAsync(new Uri(@"http://channel9.msdn.com/events/build/build2011/sessions"));
-                
-                //var techEdService = new TechEdServiceReference.ODataTEEntities(new Uri(Settings.SessionServiceUri));
-                //var sessionsQuery = from s in techEdService.Sessions //.Take(20)
-                //                    select new SessionTemp
-                //                               {
-                //                                   SessionId = s.SessionID,
-                //                                   Code = s.Code,
-                //                                   Title = s.Title,
-                //                                   Description = s.Abstract,
-                //                                   Room = s.Room,
-                //                                   StartTime = s.StartTime,
-                //                                   Speakers = s.Speakers.Select(p => new SpeakerTemp { SpeakerId = p.SpeakerID, First = p.SpeakerFirstName, Last = p.SpeakerLastName, Twitter = p.Twitter, SmallImage = p.SmallImage })
-                //                               };
-                //((DataServiceQuery)sessionsQuery).BeginExecute(OnCustomerOrdersQueryComplete, sessionsQuery);
             }
         }
 
@@ -104,7 +90,7 @@ namespace ConferenceStarterKit.Services
             public bool Prerecorded { get; set; }
             public bool Notrecorded { get; set; }
             public string Previewimage { get; set; }
-            public string Thumbnailimage { get; set; }
+            public string ThumbnailImage { get; set; }
             public string Video { get; set; }
             public string Mp4med { get; set; }
             public string Mp4high { get; set; }
@@ -127,13 +113,18 @@ namespace ConferenceStarterKit.Services
                                      orderby s.Code
                                      select new SessionItemModel
                                                 {
-                                                    //Id = s.Id,
+                                                    Id = s.Id,
                                                     Code = s.Code,
                                                     Title = s.Title,
                                                     Description = StripHtmlTags(s.Description),
                                                     Location = s.Room,
-                                                    Date = (DateTime.TryParse(s.Starts, out tempTime) ? DateTime.Parse(s.Starts) : DateTime.MinValue ) ,
+                                                    Date = (DateTime.TryParse(s.Starts, out tempTime) ? DateTime.Parse(s.Starts) : DateTime.MinValue),
                                                     //Speakers = s.Speakers.Select(p => new SpeakerItemModel { Id = p.SpeakerId, FirstName = p.First, LastName = p.Last, PictureUrl = p.SmallImage }).ToObservableCollection()
+
+                                                    //Build specific
+                                                    SpeakerIds = (s.SpeakerIds != null ? s.SpeakerIds.ToObservableCollection() : null),
+                                                    Link = s.Link,
+                                                    Thumbnail = s.ThumbnailImage
                                                 }).ToList();
 
                     // Display the data on the screen ONLY if we didn't already load from the cache
@@ -175,64 +166,6 @@ namespace ConferenceStarterKit.Services
             {
                 throw;
             }
-        }
-
-
-        ConferenceResponse response;
-        void SessionCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-            LoadEventArgs loadedEventArgs = new LoadEventArgs();
-
-            try
-            {
-                response = new ConferenceResponse(e.Result);
-
-                IEnumerable<JsonTypes.Speaker> speakers = response.Speakers.ToList();
-                IEnumerable<JsonTypes.Session> sessions = response.Sessions.ToList();
-                IEnumerable<JsonTypes.TimeSlot> timeslots = response.TimeSlots.ToList();
-
-                SpeakerList = (from s in speakers
-                               select new SpeakerItemModel
-                               {
-                                   Bio = StripHtmlTags(s.Bio),
-                                   Id = s.Id,
-                                   FirstName = s.FirstName,
-                                   LastName = s.LastName,
-                                   Position = s.Position,
-                                   PictureUrl = string.Format("http://phillyemergingtech.com/2011{0}", s.PictureUrl),
-                                   Twitter = s.Twitter
-
-                               }).ToObservableCollection(SpeakerList);
-
-                SessionList = (from s in sessions
-                               select new SessionItemModel
-                               {
-                                   Title = s.Name,
-                                   Date = DateTime.Parse((from t in timeslots
-                                                          where t.Id == s.TimeSlotId
-                                                          select t.StartTime).First()),
-                                   Description = StripHtmlTags(s.Description),
-                                   Location = s.SessionLocationName,
-                                   Id = s.Id,
-                                   Speakers = (from spk in SpeakerList
-                                               where s.SpeakerIds.Contains(spk.Id)
-                                               select spk).ToObservableCollection()
-                               }).ToObservableCollection(SessionList);
-
-                loadedEventArgs.IsLoaded = true;
-                loadedEventArgs.Message = string.Empty;
-            }
-            catch (Exception ex)
-            {
-                loadedEventArgs.IsLoaded = false;
-                loadedEventArgs.Message = "unable to load data";
-            }
-            finally
-            {
-                OnDataLoaded(loadedEventArgs);
-            }
-
-
         }
 
         protected virtual void OnDataLoaded(LoadEventArgs e)

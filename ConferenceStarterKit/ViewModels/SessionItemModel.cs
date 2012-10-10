@@ -14,7 +14,7 @@ namespace ConferenceStarterKit.ViewModels
 {
     public class SessionItemModel : ModelBase
     {
-        private int _id;
+        private string _id;
         private string _code;
         private string _title;
         private DateTime _date;
@@ -29,7 +29,11 @@ namespace ConferenceStarterKit.ViewModels
         private int _primarytagid;
         private int[] _tagids;
 
-        public int Id
+        public string Link { get; set; }
+        public string Thumbnail { get; set; }
+        public ObservableCollection<string> SpeakerIds { get; set; }
+
+        public string Id
         {
             get { return _id; }
             set
