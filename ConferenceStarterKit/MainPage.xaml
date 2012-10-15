@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage xmlns:ig="clr-namespace:Infragistics.Controls.Grids;assembly=InfragisticsWP7.Controls.Grids.XamList.v12.1" 
+﻿<phone:PhoneApplicationPage xmlns:ig="clr-namespace:Infragistics.Controls.Grids;assembly=InfragisticsWP7.Controls.Grids.XamList.v12.2" 
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

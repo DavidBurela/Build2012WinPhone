@@ -50,14 +50,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="InfragisticsWP7.v12.2, Version=12.2.20122.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="InfragisticsWP7.Controls.Interactions.XamWindow.v12.2, Version=12.2.20122.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="InfragisticsWP7.Controls.Interactions.XamMessageBox.v12.2, Version=12.2.20122.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
+    <Reference Include="InfragisticsWP7.Controls.Grids.XamList.v12.2, Version=12.2.20122.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
     <Reference Include="Coding4Fun.Phone.Controls, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Coding4Fun.Phone.Controls.1.6.1\lib\sl4-windowsphone71\Coding4Fun.Phone.Controls.dll</HintPath>
     </Reference>
-    <Reference Include="InfragisticsWP7.Controls.Grids.XamList.v12.1, Version=12.1.20121.1032, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
-    <Reference Include="InfragisticsWP7.Controls.Interactions.XamMessageBox.v12.1, Version=12.1.20121.1032, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
-    <Reference Include="InfragisticsWP7.Controls.Interactions.XamWindow.v12.1, Version=12.1.20121.1032, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
-    <Reference Include="InfragisticsWP7.v12.1, Version=12.1.20121.1032, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit">

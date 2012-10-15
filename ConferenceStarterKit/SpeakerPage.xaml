@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:ETE_Converters="clr-namespace:ConferenceStarterKit.Converters" xmlns:ETE_ViewModels="clr-namespace:ConferenceStarterKit.ViewModels" 
     xmlns:local="clr-namespace:ConferenceStarterKit"
-    xmlns:ig="clr-namespace:Infragistics.Controls.Grids;assembly=InfragisticsWP7.Controls.Grids.XamList.v12.1"
+    xmlns:ig="clr-namespace:Infragistics.Controls.Grids;assembly=InfragisticsWP7.Controls.Grids.XamList.v12.2"
     x:Class="ConferenceStarterKit.SpeakerPage" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     SupportedOrientations="Portrait"  Orientation="Portrait"
