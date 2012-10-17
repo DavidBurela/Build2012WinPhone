@@ -30,6 +30,19 @@ namespace ConferenceStarterKit.Services
 
         public event LoadEventHandler DataLoaded;
 
+        private bool _sessionsAreNotOnlineYet;
+
+        public bool SessionsAreNotOnlineYet
+        {
+            get { return _sessionsAreNotOnlineYet; }
+            set
+            {
+                _sessionsAreNotOnlineYet = value;
+                NotifyPropertyChanged("SessionsAreNotOnlineYet");
+            }
+        }
+
+
         public ObservableCollection<SessionItemModel> GetSessions()
         {
             return SessionList;
@@ -162,22 +175,26 @@ namespace ConferenceStarterKit.Services
                             OnDataLoaded(loadedEventArgs);
                         });
 
+                    // Make sure the sessions are online before caching
+                    if (converted.Count > 1)
+                    {
+                        // Save the results into the cache.
+                        // First save the data
+                        if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
+                            IsolatedStorageSettings.ApplicationSettings.Remove("SessionData");
+                        IsolatedStorageSettings.ApplicationSettings.Add("SessionData", converted);
 
-                    // Save the results into the cache.
-                    // First save the data
-                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
-                        IsolatedStorageSettings.ApplicationSettings.Remove("SessionData");
-                    IsolatedStorageSettings.ApplicationSettings.Add("SessionData", converted);
-
-                    // then update the last updated key
-                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
-                        IsolatedStorageSettings.ApplicationSettings.Remove("SessionLastDownload");
-                    IsolatedStorageSettings.ApplicationSettings.Add("SessionLastDownload", DateTime.Now);
-                    IsolatedStorageSettings.ApplicationSettings.Save(); // trigger a save
-
+                        // then update the last updated key
+                        if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
+                            IsolatedStorageSettings.ApplicationSettings.Remove("SessionLastDownload");
+                        IsolatedStorageSettings.ApplicationSettings.Add("SessionLastDownload", DateTime.Now);
+                        IsolatedStorageSettings.ApplicationSettings.Save(); // trigger a save
+                    }
+                    else
+                        SessionsAreNotOnlineYet = true;
                 }
             }
-            catch (WebException)
+            catch (WebException ex)
             {
                 System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
@@ -210,7 +227,7 @@ namespace ConferenceStarterKit.Services
 
                                          //Build specific
                                          SessionIds = (s.SessionIds != null ? s.SessionIds.ToObservableCollection() : null),
-                                         
+
                                      }).ToList();
 
                     // Display the data on the screen ONLY if we didn't already load from the cache
@@ -223,19 +240,21 @@ namespace ConferenceStarterKit.Services
                             OnDataLoaded(loadedEventArgs);
                         });
 
+                    // Make sure the sessions are online before caching
+                    if (converted.Count > 1)
+                    {
+                        // Save the results into the cache.
+                        // First save the data
+                        if (IsolatedStorageSettings.ApplicationSettings.Contains("SpeakerData"))
+                            IsolatedStorageSettings.ApplicationSettings.Remove("SpeakerData");
+                        IsolatedStorageSettings.ApplicationSettings.Add("SpeakerData", converted);
 
-                    // Save the results into the cache.
-                    // First save the data
-                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SpeakerData"))
-                        IsolatedStorageSettings.ApplicationSettings.Remove("SpeakerData");
-                    IsolatedStorageSettings.ApplicationSettings.Add("SpeakerData", converted);
-
-                    // then update the last updated key
-                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SpeakerLastDownload"))
-                        IsolatedStorageSettings.ApplicationSettings.Remove("SpeakerLastDownload");
-                    IsolatedStorageSettings.ApplicationSettings.Add("SpeakerLastDownload", DateTime.Now);
-                    IsolatedStorageSettings.ApplicationSettings.Save(); // trigger a save
-
+                        // then update the last updated key
+                        if (IsolatedStorageSettings.ApplicationSettings.Contains("SpeakerLastDownload"))
+                            IsolatedStorageSettings.ApplicationSettings.Remove("SpeakerLastDownload");
+                        IsolatedStorageSettings.ApplicationSettings.Add("SpeakerLastDownload", DateTime.Now);
+                        IsolatedStorageSettings.ApplicationSettings.Save(); // trigger a save
+                    }
                 }
             }
             catch (WebException)

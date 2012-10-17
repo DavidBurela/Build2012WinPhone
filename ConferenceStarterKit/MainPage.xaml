@@ -17,6 +17,7 @@
     <phone:PhoneApplicationPage.Resources>
 
         <ETE_Converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+        <ETE_Converters:VisibilityConverter x:Key="VisibilityConverter"/>
 
         <!-- The template for groups when they are items in the "jump list". Not setting -->
         <ETE_Converters:CountVisibilityConverter x:Key="CountVisibilityConverter"/>
@@ -89,21 +90,26 @@
                     </StackPanel>
                 </controls:PivotItem.Header>
 
-                <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" ItemClicked="SessionList_ItemClicked" >
-                    <ig:XamList.ItemsTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,17" >
-                                <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />
-                                <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
+                <Grid Visibility="{Binding Path=Service.SessionsAreNotOnlineYet, Converter={StaticResource VisibilityConverter}}">
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="The sessions are not online yet" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" />
+                        <TextBlock Text="Try again closer to the conference" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" />
+                    </StackPanel>
+                    <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" ItemClicked="SessionList_ItemClicked" >
+                        <ig:XamList.ItemsTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,17" >
+                                    <TextBlock Text="{Binding CodeAndTitle}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" />
+                                    <TextBlock Text="{Binding Date, StringFormat=\{0:ddd d/M hh:mm tt\}}" TextWrapping="Wrap" Style="{StaticResource PhoneTextSmallStyle}" >
                                 	<TextBlock.Foreground>
                                 		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                                 	</TextBlock.Foreground>
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ig:XamList.ItemsTemplate>
-                </ig:XamList>
-
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ig:XamList.ItemsTemplate>
+                    </ig:XamList>
+                </Grid>
             </controls:PivotItem>
 
             <!--Schedule-->
@@ -208,7 +214,7 @@
             </controls:PivotItem>-->
         </controls:Pivot>
     </Grid>
-    
+
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized">
             <shell:ApplicationBar.MenuItems>

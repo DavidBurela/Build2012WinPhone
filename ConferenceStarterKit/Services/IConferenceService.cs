@@ -14,6 +14,7 @@ namespace ConferenceStarterKit.Services
 {
     public interface IConferenceService
     {
+        bool SessionsAreNotOnlineYet { get; set; }
         void GetData();
         event LoadEventHandler DataLoaded;
         ObservableCollection<SessionItemModel> GetSessions();

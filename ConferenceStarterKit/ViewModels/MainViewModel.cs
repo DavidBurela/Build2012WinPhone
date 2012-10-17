@@ -46,20 +46,20 @@ namespace ConferenceStarterKit.ViewModels
                 NotifyPropertyChanged("Filter");
             }
         }
-       
+
         public MainViewModel()
         {
             Service.DataLoaded += new LoadEventHandler(Service_DataLoaded);
             IsLoading = true;
-            LoadData();           
+            LoadData();
         }
 
         void Service_DataLoaded(object sender, LoadEventArgs e)
         {
             this.IsDataLoaded = e.IsLoaded;
             IsLoading = false;
-        }        
- 
+        }
+
 
         private IConferenceService _Service;
         public IConferenceService Service
@@ -89,6 +89,8 @@ namespace ConferenceStarterKit.ViewModels
 
             Sessions = Service.GetSessions();
             Speakers = Service.GetSpeakers();
+            if (Service.SessionsAreNotOnlineYet)
+                DiscoveredThatSessionsAreNotOnlineYet = true;
 
             //needs to get it from iso if available...
             App.Sessions = Sessions;
@@ -98,8 +100,18 @@ namespace ConferenceStarterKit.ViewModels
                 App.SavedSessions = new ObservableCollection<SessionItemModel>();
 
             SavedSessions = App.SavedSessions;
+        }
 
-            
-        }       
+        private bool _discoveredThatSessionsAreNotOnlineYet;
+        public bool DiscoveredThatSessionsAreNotOnlineYet
+        {
+            get { return _discoveredThatSessionsAreNotOnlineYet; }
+            set
+            {
+                _discoveredThatSessionsAreNotOnlineYet = value;
+                NotifyPropertyChanged("DiscoveredThatSessionsAreNotOnlineYet");
+            }
+        }
+
     }
 }

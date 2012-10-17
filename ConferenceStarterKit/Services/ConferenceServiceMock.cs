@@ -17,6 +17,8 @@ namespace ConferenceStarterKit.Services
     {
         public event LoadEventHandler DataLoaded;
 
+        public bool SessionsAreNotOnlineYet { get; set; }
+
         public void GetData()
         {
             
