@@ -15,7 +15,7 @@ namespace ConferenceStarterKit.ViewModels
 {
     public class SpeakerItemModel : ModelBase
     {
-        private int _id;
+        private string _id;
         private string _firstname;
         private string _lastname;
         private string _bio;
@@ -24,8 +24,9 @@ namespace ConferenceStarterKit.ViewModels
         private string _twitter;
 
         public ObservableCollection<SessionItemModel> Sessions { get; set; }
+        public ObservableCollection<string> SessionIds { get; set; }
 
-        public int Id
+        public string Id
         {
             get { return _id; }
             set

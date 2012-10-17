@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,7 +51,8 @@ namespace ConferenceStarterKit.ViewModels
             if (App.CurrentSession != null)
             {
                 Session = App.CurrentSession;
-                Speakers = Session.Speakers;
+                Speakers = App.Speakers.Where(p => p.SessionIds.Contains(Session.Id)).ToObservableCollection();
+
             }
         }   
     }

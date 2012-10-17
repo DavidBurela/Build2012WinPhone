@@ -47,7 +47,7 @@ namespace ConferenceStarterKit.ViewModels
         public void LoadData()
         {
             Speaker = App.CurrentSpeaker;
-            Speaker.Sessions = App.Sessions.Where(p => p.Speakers.Contains(Speaker)).ToObservableCollection();
+            Speaker.Sessions = App.Sessions.Where(p => p.SpeakerIds.Contains(Speaker.Id)).ToObservableCollection();
             Twitter = Service.GetTwitterFeed(Speaker.Twitter);
         }   
     }

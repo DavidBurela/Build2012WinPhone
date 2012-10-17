@@ -48,7 +48,15 @@ namespace ConferenceStarterKit.Services
                 var converted = (IsolatedStorageSettings.ApplicationSettings["SessionData"] as IEnumerable<SessionItemModel>);
 
                 SessionList = converted.ToObservableCollection(SessionList);
-                //SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
+                var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
+                OnDataLoaded(loadedEventArgs);
+            }
+            // Get the data from Isolated storage if it is there
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("SpeakerData"))
+            {
+                var converted = (IsolatedStorageSettings.ApplicationSettings["SpeakerData"] as IEnumerable<SpeakerItemModel>);
+
+                SpeakerList = converted.ToObservableCollection(SpeakerList);
                 var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
                 OnDataLoaded(loadedEventArgs);
             }
@@ -64,13 +72,17 @@ namespace ConferenceStarterKit.Services
             // Cache the data for 2 hours
             if ((sessionLastDownload.AddHours(2) < DateTime.Now) || !IsolatedStorageSettings.ApplicationSettings.Contains("SessionData"))
             {
-                // Download the data
-                var webClient = new SharpGIS.GZipWebClient();
-                webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(webClient_DownloadStringCompleted);
-                webClient.DownloadStringAsync(new Uri(@"http://channel9.msdn.com/events/build/build2011/sessions"));
+                // Download the session data
+                var sessionWebClient = new SharpGIS.GZipWebClient();
+                sessionWebClient.DownloadStringCompleted += sessionWebClient_DownloadStringCompleted;
+                sessionWebClient.DownloadStringAsync(new Uri(Settings.SessionServiceUri));
+
+                // Download speaker data
+                var speakerWebClient = new SharpGIS.GZipWebClient();
+                speakerWebClient.DownloadStringCompleted += speakerWebClient_DownloadStringCompleted;
+                speakerWebClient.DownloadStringAsync(new Uri(Settings.SpeakerServiceUri));
             }
         }
-
 
         public class SessionsResponse
         {
@@ -101,11 +113,21 @@ namespace ConferenceStarterKit.Services
             public string Room { get; set; }
         }
 
-        void webClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        public class SpeakerResponse
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string First { get; set; }
+            public string Last { get; set; }
+            public string Bio { get; set; }
+            public string Photo { get; set; }
+            public List<string> SessionIds { get; set; }
+        }
+
+        void sessionWebClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-
                 var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SessionsResponse>>(e.Result);
                 {
                     DateTime tempTime;
@@ -149,6 +171,67 @@ namespace ConferenceStarterKit.Services
                     if (IsolatedStorageSettings.ApplicationSettings.Contains("SessionLastDownload"))
                         IsolatedStorageSettings.ApplicationSettings.Remove("SessionLastDownload");
                     IsolatedStorageSettings.ApplicationSettings.Add("SessionLastDownload", DateTime.Now);
+                    IsolatedStorageSettings.ApplicationSettings.Save(); // trigger a save
+
+                }
+            }
+            catch (WebException)
+            {
+                System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    var loadedEventArgs = new LoadEventArgs { IsLoaded = false, Message = "There was a network error. Close the app and try again." };
+                    OnDataLoaded(loadedEventArgs);
+                    System.Windows.MessageBox.Show("There was a network error. Close the app and try again.");
+                });
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        void speakerWebClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            try
+            {
+                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SpeakerResponse>>(e.Result);
+                {
+                    var converted = (from s in deserialized
+                                     orderby s.Last
+                                     select new SpeakerItemModel
+                                     {
+                                         Id = s.Id,
+                                         Bio = StripHtmlTags(s.Bio ?? ""),
+                                         FirstName = s.First,
+                                         LastName = s.Last,
+                                         PictureUrl = s.Photo,
+
+                                         //Build specific
+                                         SessionIds = (s.SessionIds != null ? s.SessionIds.ToObservableCollection() : null),
+                                         
+                                     }).ToList();
+
+                    // Display the data on the screen ONLY if we didn't already load from the cache
+                    // Don't bother about rebinding everything, just wait until the user launches the next time.
+                    if (SpeakerList.Count < 1)
+                        System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            SpeakerList = converted.ToObservableCollection(SpeakerList);
+                            var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
+                            OnDataLoaded(loadedEventArgs);
+                        });
+
+
+                    // Save the results into the cache.
+                    // First save the data
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SpeakerData"))
+                        IsolatedStorageSettings.ApplicationSettings.Remove("SpeakerData");
+                    IsolatedStorageSettings.ApplicationSettings.Add("SpeakerData", converted);
+
+                    // then update the last updated key
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("SpeakerLastDownload"))
+                        IsolatedStorageSettings.ApplicationSettings.Remove("SpeakerLastDownload");
+                    IsolatedStorageSettings.ApplicationSettings.Add("SpeakerLastDownload", DateTime.Now);
                     IsolatedStorageSettings.ApplicationSettings.Save(); // trigger a save
 
                 }

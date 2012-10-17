@@ -35,12 +35,12 @@
 					</TextBlock.Foreground>
 				</TextBlock>
 				<TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding Position}" VerticalAlignment="Top"/>
-				<TextBlock Grid.Column="1" Margin="12,0,0,0" TextWrapping="Wrap" Text="twitter" VerticalAlignment="Top" FontFamily="Segoe WP Black" FontSize="24">
+				<!--<TextBlock Grid.Column="1" Margin="12,0,0,0" TextWrapping="Wrap" Text="twitter" VerticalAlignment="Top" FontFamily="Segoe WP Black" FontSize="24">
 					<TextBlock.Foreground>
 						<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
 					</TextBlock.Foreground>
 				</TextBlock>
-				<TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding Twitter}" VerticalAlignment="Top"/>
+				<TextBlock Grid.Column="1" Margin="12,0,0,6" TextWrapping="Wrap" Text="{Binding Twitter}" VerticalAlignment="Top"/>-->
 			</StackPanel>
 			
 		

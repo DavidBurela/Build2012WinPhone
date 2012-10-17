@@ -72,7 +72,7 @@
 
             </controls:PivotItem>
 
-            <controls:PivotItem Header="twitter">
+            <!--<controls:PivotItem Header="twitter">
                 <Grid>
                     <TextBlock x:Name="noTwitterTextBlock" Visibility="Collapsed" Style="{StaticResource PhoneTextTitle3Style}" Text="Speaker has not submitted a twitter handle" TextWrapping="Wrap" />
                     <ListBox  x:Name="TwitterListBox" Margin="0" ItemsSource="{Binding Twitter}">
@@ -86,7 +86,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-            </controls:PivotItem>
+            </controls:PivotItem>-->
         </controls:Pivot>
     </Grid>
 
