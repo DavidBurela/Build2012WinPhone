@@ -53,11 +53,12 @@ namespace ConferenceStarterKit
                 try
                 {
                     Reminder reminder = new Reminder(vm.Session.Title);
-                    reminder.BeginTime = vm.Session.Date;
+                    reminder.BeginTime = vm.Session.Date.AddMinutes(-5); // Add a reminder 5 mins before it starts
+                    reminder.Content = vm.Session.Title;
                     reminder.RecurrenceType = RecurrenceInterval.None;
 
                     ScheduledActionService.Add(reminder);
-                    XamMessageBox.Show("Favourite added", "The session was added to your favourites.",
+                    XamMessageBox.Show("Favourite added", "Added to your favourites.",
                         () => { },
                         VerticalPosition.Center,
                         new XamMessageBoxCommand("OK", () => { }));
