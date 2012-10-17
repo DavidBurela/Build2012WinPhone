@@ -47,8 +47,8 @@
         <Link NavigateUri="http://about.me/DavidBurela"
               Content="about.me/DavidBurela"
               Label="About me:" />
-        <Link NavigateUri="https://github.com/DavidBurela/TechEdAusWinPhone"
-              Content="github.com/DavidBurela/TechEdAusWinPhone"
+        <Link NavigateUri="https://github.com/DavidBurela/Build2012WinPhone"
+              Content="github.com/DavidBurela/Build2012WinPhone"
               Label="Source code:" />
         <Link NavigateUri="http://twitter.com/DavidBurela"
               Content="@DavidBurela"
@@ -66,6 +66,8 @@
       Includes:
       - Search through session code, title &amp; abstract to find exactly what you are looking for!
       - Sessions by timeslot, easily discover which sessions are on right now
+      - Links to slides
+      - Links to video streams
       - Save sessions to favourites
       - Sessions cached for 2 hours to reduce network bandwidth
     </Item>
