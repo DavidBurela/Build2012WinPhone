@@ -214,8 +214,8 @@
     </Content>
     <Content Include="Content\About\Data.xml" />
     <Content Include="Images\appbar.favs.addto.rest.png" />
+    <Content Include="Images\header.png" />
     <Content Include="Images\missingprofile.png" />
-    <Content Include="Images\techedheader.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />

@@ -77,7 +77,7 @@
         <!--Title="{Binding ApplicationName, ConverterParameter=l, Converter={StaticResource CaseConverter}, Mode=OneWay}"-->
         <controls:Pivot >
             <controls:Pivot.Title>
-                <Image Source="/Images/techedheader.png" Height="100" HorizontalAlignment="Left" ></Image>
+                <Image Source="/Images/header.png" Height="55" HorizontalAlignment="Left" ></Image>
             </controls:Pivot.Title>
 
             <!--Sessions-->

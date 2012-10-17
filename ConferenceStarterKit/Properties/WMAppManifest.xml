@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{b0ec0d78-658d-45b5-9367-155cad6213db}" Title="TechEd Australia 2012" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Danilo Diaz" Description="Conference App" Publisher="Danilo Diaz">
+  <App xmlns="" ProductID="{b0ec0d78-658d-45b5-9367-155cad6213db}" Title="Build 2012" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Danilo Diaz" Description="Conference App" Publisher="Danilo Diaz">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_GAMERSERVICES" />
@@ -26,7 +26,7 @@
         <TemplateType5>
           <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>TechEd Australia</Title>
+          <Title>Build 2012</Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>
