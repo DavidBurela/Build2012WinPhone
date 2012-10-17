@@ -48,7 +48,7 @@ namespace ConferenceStarterKit.Services
                 var converted = (IsolatedStorageSettings.ApplicationSettings["SessionData"] as IEnumerable<SessionItemModel>);
 
                 SessionList = converted.ToObservableCollection(SessionList);
-                SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
+                //SpeakerList = SessionList.SelectMany(p => p.Speakers).Distinct().OrderBy(p => p.SurnameFirstname).ToObservableCollection(SpeakerList);
                 var loadedEventArgs = new LoadEventArgs { IsLoaded = true, Message = string.Empty };
                 OnDataLoaded(loadedEventArgs);
             }
@@ -153,7 +153,7 @@ namespace ConferenceStarterKit.Services
 
                 }
             }
-            catch (DataServiceQueryException)
+            catch (WebException)
             {
                 System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
