@@ -76,14 +76,30 @@
                             </TextBlock>
                             <TextBlock Margin="0,0,12,6" TextWrapping="Wrap" Text="{Binding Session.Location}"/>
                             <!--Link-->
-                            <TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="online link" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Location, Converter={StaticResource StringVisibilityConverter}}">
+                            <TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="online link" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Link, Converter={StaticResource StringVisibilityConverter}}">
 	                			<TextBlock.Foreground>
 	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
 	                			</TextBlock.Foreground>
                             </TextBlock>
                             <HyperlinkButton Margin="-10,0,0,6" HorizontalContentAlignment="Left" Content="{Binding Session.Link}" NavigateUri="{Binding Session.Link}" TargetName="ie" />
+                            <!--Slides-->
+                            <TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="slides" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.SlidesUri, Converter={StaticResource StringVisibilityConverter}}">
+	                			<TextBlock.Foreground>
+	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+	                			</TextBlock.Foreground>
+                            </TextBlock>
+                            <HyperlinkButton Margin="-10,0,0,6" HorizontalContentAlignment="Left" Content="{Binding Session.SlidesUri}" NavigateUri="{Binding Session.SlidesUri}" TargetName="ie" />
+                            <!--Video link-->
+                            <TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="video" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.WmvUri, Converter={StaticResource StringVisibilityConverter}}">
+	                			<TextBlock.Foreground>
+	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+	                			</TextBlock.Foreground>
+                            </TextBlock>
+                            <HyperlinkButton Margin="-10,0,0,6" HorizontalContentAlignment="Left" Content="{Binding Session.WmvUri}" NavigateUri="{Binding Session.WmvUri}" TargetName="ie" />
+
+
                             <!--Description-->
-	                		<TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="description" FontFamily="Segoe WP Black" FontSize="24" Visibility="{Binding Session.Title}">
+	                		<TextBlock Margin="0,0,12,0" TextWrapping="Wrap" Text="description" FontFamily="Segoe WP Black" FontSize="24" >
 	                			<TextBlock.Foreground>
 	                				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
 	                			</TextBlock.Foreground>

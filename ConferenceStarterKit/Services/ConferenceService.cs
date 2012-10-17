@@ -146,7 +146,9 @@ namespace ConferenceStarterKit.Services
                                                     //Build specific
                                                     SpeakerIds = (s.SpeakerIds != null ? s.SpeakerIds.ToObservableCollection() : null),
                                                     Link = s.Link,
-                                                    Thumbnail = s.ThumbnailImage
+                                                    SlidesUri = s.Slides,
+                                                    Thumbnail = s.ThumbnailImage,
+                                                    WmvUri = s.Wmv,
                                                 }).ToList();
 
                     // Display the data on the screen ONLY if we didn't already load from the cache

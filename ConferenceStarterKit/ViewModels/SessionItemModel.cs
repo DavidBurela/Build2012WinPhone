@@ -32,6 +32,8 @@ namespace ConferenceStarterKit.ViewModels
         public string Link { get; set; }
         public string Thumbnail { get; set; }
         public ObservableCollection<string> SpeakerIds { get; set; }
+        public string SlidesUri { get; set; }
+        public string WmvUri { get; set; }
 
         public string Id
         {
