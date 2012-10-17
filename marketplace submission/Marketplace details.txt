@@ -1,0 +1,13 @@
+A companion application for the Microsoft Build 2012 conference.
+Search through sessions directly from the list, click on the magnifying glass to search by session code, title and abstract.
+Open session slides and stream recorded session directly to your phone.
+
+1.0
+Initial public release.
+Includes:
+- Search through session code, title &amp; abstract to find exactly what you are looking for!
+- Sessions by timeslot, easily discover which sessions are on right now
+- Links to slides
+- Links to video streams
+- Save sessions to favourites
+- Sessions cached for 2 hours to reduce network bandwidth
