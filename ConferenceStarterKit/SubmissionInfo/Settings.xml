@@ -1,6 +1,6 @@
 <MarketplaceDetails>
-  <SmallAppTile>TechEdAusWinPhone_99.png</SmallAppTile>
-  <LargeAppTile>TechEdAusWinPhone_173.png</LargeAppTile>
-  <PCAppTile>TechEdAusWinPhone_200.png</PCAppTile>
-  <ScreenShots>Session info.png;session searching.png;schedule grouping.png;speaker info.png;;;;;</ScreenShots>
+  <SmallAppTile>AppIcon_99.png</SmallAppTile>
+  <LargeAppTile>AppIcon_173.png</LargeAppTile>
+  <PCAppTile>AppIcon_200.png</PCAppTile>
+  <ScreenShots>Session info.png;session searching.png;schedule grouping.png;speaker info.png;Splash screen.png;;;;</ScreenShots>
 </MarketplaceDetails>
