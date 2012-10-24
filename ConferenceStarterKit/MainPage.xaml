@@ -90,11 +90,11 @@
                     </StackPanel>
                 </controls:PivotItem.Header>
 
-                <Grid Visibility="{Binding Path=Service.SessionsAreNotOnlineYet, Converter={StaticResource VisibilityConverter}}">
-                    <StackPanel VerticalAlignment="Center">
+                <Grid >
+                    <!--<StackPanel VerticalAlignment="Center" Visibility="{Binding Path=Service.SessionsAreNotOnlineYet, Converter={StaticResource VisibilityConverter}}">
                         <TextBlock Text="The sessions are not online yet" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" />
                         <TextBlock Text="Try again closer to the conference" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" />
-                    </StackPanel>
+                    </StackPanel>-->
                     <ig:XamList Margin="0,-40,0,0" ItemsSource="{Binding Sessions}" Name="SessionList" ItemClicked="SessionList_ItemClicked" >
                         <ig:XamList.ItemsTemplate>
                             <DataTemplate>

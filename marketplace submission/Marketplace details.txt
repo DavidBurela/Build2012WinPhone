@@ -5,7 +5,7 @@ Open session slides and stream recorded session directly to your phone.
 1.0
 Initial public release.
 Includes:
-- Search through session code, title &amp; abstract to find exactly what you are looking for!
+- Search through session code, title & abstract to find exactly what you are looking for!
 - Sessions by timeslot, easily discover which sessions are on right now
 - Links to slides
 - Links to video streams
